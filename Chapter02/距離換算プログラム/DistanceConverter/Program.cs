@@ -4,14 +4,16 @@ namespace DistanceConverter {
     internal class Program {
         static void Main(string[] args) {
 
-            int.TryParse(args[1], out int x);
-            int.TryParse(args[2], out int y);
+            if (args.Length == 3 && int.TryParse(args[1], out int x) && int.TryParse(args[2], out int y)) {
+                if (args[0] == "-tom") {
+                    PrintFeetToMeterList(x, y);
 
-            if (args.Length >= 3 && args[0] == "-tom") {
-                PrintFeetToMeterList(x, y);
+                } else if (args[0] == "-tof") {
+                    PrintMeterToFeetList(x, y);
 
-            } else if (args.Length >= 3 && args[0] == "-tof") {
-                PrintMeterToFeetList(x, y);
+                } else {
+                    Console.WriteLine("引数エラー");
+                }
 
             } else {
                 Console.WriteLine("引数エラー");

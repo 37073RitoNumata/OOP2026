@@ -1,25 +1,18 @@
 ﻿namespace Code4_36 {
     internal class Program {
-        static void Main(string[] args)
-        {
+        static void Main(string[] args) {
             var str = "1234";
 
-            if (int.TryParse(str, out var height))
-            {
+            if (int.TryParse(str, out var height)) {
                 Console.WriteLine(height + ":変換成功");
-            }
-            else
-            {
+            } else {
                 Console.WriteLine("変換できません");
             }
 
             //Parseで変換する場合は例外処理が必要となる
-            try
-            {
+            try {
                 int num = int.Parse(str);
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
                 Console.WriteLine("変換できません");
             }
         }
