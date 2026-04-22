@@ -8,13 +8,15 @@ namespace DistanceConverter {
             {
                 PrintFeetToMeterList(1, 10);
             }
-            else
+            else if (args[0] == "-tof")
             {
                 PrintMeterToFeetList(1, 10);
-                //メートルからフィートへの対応表を出力
-
-
             }
+            else
+            {
+                Console.WriteLine("引数エラー");
+            }
+
         }
 
 
@@ -50,4 +52,4 @@ namespace DistanceConverter {
     }
 
 }
-}
+
