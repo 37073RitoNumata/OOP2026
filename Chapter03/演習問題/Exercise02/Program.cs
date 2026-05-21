@@ -36,21 +36,20 @@ namespace Exercise02 {
         }
 
         private static void Exercise2_3(List<string> cities) {
-            var ocities = cities.Where(s => s.Contains('o'));
-            foreach (var oc in ocities) {
-                Console.WriteLine(oc);
+            var query = cities.Where(s => s.Contains('o'));
+            foreach (var s in query) {
+                Console.WriteLine(s);
             }
 
         }
 
         private static void Exercise2_4(List<string> cities) {
-
-
-
-
-
-
-
+            var query = cities
+                .Where(s => s.StartsWith('B'))
+                .Select(s => s.Length);
+            foreach (var s in query) {
+                Console.WriteLine(s);
+            }
         }
     }
 }
