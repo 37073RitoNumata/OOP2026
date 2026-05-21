@@ -34,7 +34,10 @@ namespace Exercise01 {
         }
 
         private static void Exercise3(List<int> numbers) {
-            //できたらGitのコメント「問題3.1.3完成」
+            var query = numbers.Where(i => i >= 50);
+            foreach (var i in query) {
+                Console.WriteLine(i);
+            }
         }
 
         private static void Exercise4(List<int> numbers) {
