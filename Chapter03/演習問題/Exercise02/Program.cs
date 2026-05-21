@@ -25,7 +25,8 @@ namespace Exercise02 {
         }
 
         private static void Exercise2_1(List<string> cities) {
-	        //できたらGitのコメント「問題3.2.1完成」
+            var name = Console.ReadLine();
+            Console.WriteLine(cities.FindIndex(s => s == name));            
 	        
         }
 
@@ -40,7 +41,12 @@ namespace Exercise02 {
         }
 
         private static void Exercise2_4(List<string> cities) {
-	        //できたらGitのコメント「問題3.2.4完成」
+	        
+
+
+
+
+
 	        
         }
     }
