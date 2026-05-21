@@ -25,29 +25,32 @@ namespace Exercise02 {
         }
 
         private static void Exercise2_1(List<string> cities) {
-            var name = Console.ReadLine();
-            Console.WriteLine(cities.FindIndex(s => s == name));            
-	        
+            //var name = Console.ReadLine();
+            //Console.WriteLine(cities.FindIndex(s => s == name));            
+
         }
 
         private static void Exercise2_2(List<string> cities) {
             Console.WriteLine(cities.Count(s => s.Contains('o')));
-	        
+
         }
 
         private static void Exercise2_3(List<string> cities) {
-	        //できたらGitのコメント「問題3.2.3完成」
-	        
+            var ocities = cities.Where(s => s.Contains('o'));
+            foreach (var oc in ocities) {
+                Console.WriteLine(oc);
+            }
+
         }
 
         private static void Exercise2_4(List<string> cities) {
-	        
 
 
 
 
 
-	        
+
+
         }
     }
 }
