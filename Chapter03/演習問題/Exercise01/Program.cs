@@ -41,7 +41,10 @@ namespace Exercise01 {
         }
 
         private static void Exercise4(List<int> numbers) {
-            //できたらGitのコメント「問題3.1.4完成」
+            var query = numbers.Select(i => i * 2);
+            foreach (var i in query) {
+                Console.WriteLine(i);
+            }
         }
     }
 }
