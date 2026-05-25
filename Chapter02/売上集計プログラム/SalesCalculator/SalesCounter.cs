@@ -22,7 +22,7 @@ namespace SalesCalculator {
                 var items = line.Split(','); //カンマ区切りで分割
                 var sale = new Sale {
                     ShopName = items[0],
-                    ProductCaregory = items[1],
+                    ProductCategory = items[1],
                     Amount = int.Parse(items[2])
                 };
                 sales.Add(sale);
