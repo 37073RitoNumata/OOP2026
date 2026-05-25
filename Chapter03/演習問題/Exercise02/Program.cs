@@ -26,13 +26,13 @@ namespace Exercise02 {
 
         private static void Exercise2_1(List<string> cities) {
             //var name = Console.ReadLine();
-            //Console.WriteLine(cities.FindIndex(s => s == name));            
-
+            //var index = cities.FindIndex(s => s.Equals(name));
+            //Console.WriteLine(index);
         }
 
         private static void Exercise2_2(List<string> cities) {
-            Console.WriteLine(cities.Count(s => s.Contains('o')));
-
+            var count = cities.Count(s => s.Contains('o'));
+            Console.WriteLine(count);
         }
 
         private static void Exercise2_3(List<string> cities) {
@@ -46,9 +46,9 @@ namespace Exercise02 {
         private static void Exercise2_4(List<string> cities) {
             var query = cities
                 .Where(s => s.StartsWith('B'))
-                .Select(s => s.Length);
-            foreach (var s in query) {
-                Console.WriteLine(s);
+                .Select(s => new {s, s.Length});
+            foreach (var data in query) {
+                Console.WriteLine(data.s + ":" + data.Length + "文字");
             }
         }
     }
