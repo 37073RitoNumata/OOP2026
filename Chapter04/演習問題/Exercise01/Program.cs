@@ -64,18 +64,7 @@ namespace Exercise01 {
 
         private static void Exercise3(List<string> langs) {
             Console.WriteLine("\n --- 4.1.3 ---");
-            Console.WriteLine(Getmassage(langs) ?? DefaultMessage());
-        }
-
-        private static object? Getmassage(List<string> langs) {
-            var lang =langs.Find(s => s.Length == 10);
-            if (lang == null) {
-                return null;
-            }
-            return lang;
-        }
-        private static object DefaultMessage() {
-            return "unknown";
+            Console.WriteLine(langs.Find(s => s.Length == 10) ?? "unknown");
         }
 
     }
