@@ -26,8 +26,6 @@ namespace Exercise01 {
                 Console.WriteLine(s);
             }
 
-
-
             //for
             Console.WriteLine("\nfor");
             for (int i = 0; i < langs.Count; i++) {
@@ -35,11 +33,6 @@ namespace Exercise01 {
                     Console.WriteLine(langs[i]);
                 }
             }
-
-
-
-
-
 
             //while  
             Console.WriteLine("\nwhile");
@@ -66,6 +59,5 @@ namespace Exercise01 {
             Console.WriteLine("\n --- 4.1.3 ---");
             Console.WriteLine(langs.Find(s => s.Length == 10) ?? "unknown");
         }
-
     }
 }
