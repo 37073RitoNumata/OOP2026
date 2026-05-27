@@ -38,19 +38,6 @@ namespace Section04 {
             int? amount = sale?.Amount;
             Console.WriteLine("売上高" + amount);
             #endregion
-
-            #region ２つの要素を入れ替える
-            int a = 10;
-            int b = 20;
-            int c = 30;
-            Console.WriteLine("入れ替え前：");
-            Console.WriteLine("a = " + a + " b = " + b);
-
-            (b, a, c) = (a, b, 999);
-
-            Console.WriteLine("入れ替え後：");
-            Console.WriteLine("a = " + a + " b = " + b + "c = " + c);
-            #endregion
         }
 
         private static string? DefaultMessage() {
@@ -71,3 +58,5 @@ namespace Section04 {
         public int Amount { get; set; }
     }
 }
+
+
