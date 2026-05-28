@@ -13,7 +13,7 @@ namespace Exercise02 {
         private static void Exercise1() {
             //if-else文を使用
             var num = Console.ReadLine();
-            if (int.TryParse(num, out int result)) {
+            if (int.TryParse(num, out var result)) {
 
                 if (result < 0 || 500 <= result) {
                     Console.WriteLine(result);
@@ -30,7 +30,7 @@ namespace Exercise02 {
         private static void Exercise2() {
             //switch文を使用
             var num = Console.ReadLine();
-            if (int.TryParse(num, out int result)) {
+            if (int.TryParse(num, out var result)) {
 
                 switch (result) {
                     case < 0:
@@ -55,8 +55,17 @@ namespace Exercise02 {
 
         private static void Exercise3() {
             //switch式を使用
-
-
+            var num = Console.ReadLine();
+            if (int.TryParse(num, out var result)) {
+                var siki = result switch {
+                    < 0 => result,
+                    < 100 => result * 2,
+                    < 500 => result * 3,
+                    _ => result
+                };
+            } else {
+                Console.WriteLine("入力値に誤りがあります");
+            }
         }
     }
 }
