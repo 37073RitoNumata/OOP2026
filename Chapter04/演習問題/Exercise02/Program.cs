@@ -48,6 +48,8 @@ namespace Exercise02 {
                         Console.WriteLine(result);
                         break;
                 }
+            } else {
+                Console.WriteLine("入力値に誤りがあります");
             }
         }
 
