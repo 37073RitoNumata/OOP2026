@@ -42,15 +42,20 @@ namespace Exercise02 {
 
         //5.2.4
         private static void Exercise4(YearMonth[] ymCollection) {
-            if (FindFirst21C(ymCollection) != null) {
-                Console.WriteLine(FindFirst21C(ymCollection));
+            var ym = FindFirst21C(ymCollection);
+            if (ym is not null) {
+                Console.WriteLine(ym);
             } else {
                 Console.WriteLine("21世紀のデータはありません");
             }
         }
 
+        //5.2.5
         private static void Exercise5(YearMonth[] ymCollection) {
-
+            var nextMonthArray = ymCollection.Select(ym => ym.AddOneMonth()).ToArray();
+            foreach (var ym in nextMonthArray) {
+                Console.WriteLine(ym);
+            }
         }
     }
 }
