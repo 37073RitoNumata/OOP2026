@@ -24,15 +24,28 @@ namespace Exercise02 {
         }
 
         private static void Exercise2(YearMonth[] ymCollection) {
-            
+            foreach (YearMonth yearMonth in ymCollection) {
+                Console.WriteLine(yearMonth.ToString());
+            }
+
+        }
+
+        //5.2.3
+        private static YearMonth? FindFirst21C(YearMonth[] ymCollection) {
+            foreach (YearMonth yearMonth in ymCollection) {
+                if (yearMonth.Is21Century) {
+                    return yearMonth;
+                }
+            }
+            return null;
         }
 
         private static void Exercise4(YearMonth[] ymCollection) {
-            
+            if(FindFirst21C(ymCollection != null)
         }
 
         private static void Exercise5(YearMonth[] ymCollection) {
-            
+
         }
     }
 }
