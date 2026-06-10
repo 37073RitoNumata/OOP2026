@@ -1,11 +1,12 @@
 ﻿namespace Exercise02 {
     internal class Program {
         static void Main(string[] args) {
-            bool Bool = int.TryParse(Console.ReadLine(), out int num);
 
-            var str = num.ToString("#,0");
-
-            Console.WriteLine(str);
+            if (int.TryParse(Console.ReadLine(), out int num)) {
+                Console.WriteLine($"{num:#,0}");
+            } else {
+                Console.WriteLine("変換できません");
+            }
         }
     }
 }
