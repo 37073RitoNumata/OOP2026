@@ -26,11 +26,17 @@ namespace Exercise03 {
 
         private static void Exercise1(string text) {
             var count = text.Count(c => c == ' ');
-            Console.WriteLine(count);
+            Console.WriteLine("空白文字数:" + count);
         }
 
         private static void Exercise2(string text) {
-           var
+            Console.WriteLine("検索:");
+            var str1 = Console.ReadLine();
+            Console.WriteLine("置換:");
+            var str2 = Console.ReadLine();
+
+            var replaced = text.Replace(str1, str2);
+            Console.WriteLine(replaced);
         }
 
         private static void Exercise3(string text) {
