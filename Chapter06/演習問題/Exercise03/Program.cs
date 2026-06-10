@@ -40,19 +40,25 @@ namespace Exercise03 {
         }
 
         private static void Exercise3(string text) {
-            
+
         }
 
         private static void Exercise4(string text) {
-            
+            string[] words = text.Split(' ');
+            Console.WriteLine(words.Length);
         }
 
         private static void Exercise5(string text) {
-            
+            string[] words = text.Split(' ');
+            foreach (var word in words) {
+                if (word.Length <= 4) {
+                    Console.WriteLine(word);
+                }
+            }
         }
 
         private static void Exercise6(string text) {
-            
+
         }
     }
 }
