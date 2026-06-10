@@ -2,7 +2,9 @@
     internal class Program {
         static void Main(string[] args) {
 
-            if (int.TryParse(Console.ReadLine(), out int num)) {
+            bool Bool = int.TryParse(Console.ReadLine(), out int num);
+
+            if (Bool) {
                 Console.WriteLine($"{num:#,0}");
             } else {
                 Console.WriteLine("変換できません");

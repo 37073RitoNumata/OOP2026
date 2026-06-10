@@ -25,11 +25,12 @@ namespace Exercise03 {
         }
 
         private static void Exercise1(string text) {
-            
+            var count = text.Count(c => c == ' ');
+            Console.WriteLine(count);
         }
 
         private static void Exercise2(string text) {
-            
+           var
         }
 
         private static void Exercise3(string text) {
