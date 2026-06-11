@@ -49,16 +49,45 @@ namespace Exercise03 {
         }
 
         private static void Exercise5(string text) {
-            var words = text.Split(' ');
-            foreach (var word in words) {
-                if (word.Length <= 4) {
-                    Console.WriteLine(word);
-                }
-            }
+            text.Split(' ').Where(s => s.Length <= 4).ToList().ForEach(Console.WriteLine);
         }
 
+        //アルファベットの数をカウントして集計する
         private static void Exercise6(string text) {
+            var str = text.ToLower().Replace(" ", "");
 
+            //ディクショナリを使った集計
+            var alphDicCount = Enumerable.Range('a', 26)
+                .ToDictionary(num => ((char)num), num => 0);
+
+            //var dict = new SortedDictionary<char, int>();
+            foreach (var c in str) {
+                if (alphDicCount.ContainsKey(c))
+                    alphDicCount[c]++;
+                else
+                    alphDicCount[c] = 1;
+            }
+            foreach (var word in alphDicCount) {
+                Console.WriteLine(word.Key + ":" + word.Value);
+            }
+
+            Console.WriteLine();
+
+            //配列を用いた集計
+            var array = Enumerable.Repeat(0, 26).ToArray();
+            foreach (var alph in str) {
+                array[alph - 'a']++;
+            }
+
+            for (char ch = 'a'; ch <= 'z'; ch++) {
+                Console.WriteLine($"{ch}:{array[ch - 'a']}");
+            }
+
+            //'a'から順にカウントして集計
+            for (char ch = 'a'; ch <= 'z'; ch++) {
+                Console.WriteLine($"{ch}:{str.Count(c => c == ch)}");
+            }
         }
     }
 }
+
