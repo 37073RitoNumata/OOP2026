@@ -30,13 +30,13 @@ namespace Exercise03 {
         }
 
         private static void Exercise2(string text) {
-            Console.WriteLine("検索:");
-            var str1 = Console.ReadLine();
-            Console.WriteLine("置換:");
-            var str2 = Console.ReadLine();
+            //Console.WriteLine("検索:");
+            //var str1 = Console.ReadLine();
+            //Console.WriteLine("置換:");
+            //var str2 = Console.ReadLine();
 
-            var replaced = text.Replace(str1, str2);
-            Console.WriteLine(replaced);
+            //var replaced = text.Replace(str1, str2);
+            //Console.WriteLine(replaced);
         }
 
         private static void Exercise3(string text) {
@@ -44,12 +44,12 @@ namespace Exercise03 {
         }
 
         private static void Exercise4(string text) {
-            string[] words = text.Split(' ');
+            var words = text.Split(' ');
             Console.WriteLine(words.Length);
         }
 
         private static void Exercise5(string text) {
-            string[] words = text.Split(' ');
+            var words = text.Split(' ');
             foreach (var word in words) {
                 if (word.Length <= 4) {
                     Console.WriteLine(word);
