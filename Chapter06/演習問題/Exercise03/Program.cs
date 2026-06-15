@@ -1,26 +1,28 @@
 ﻿
+using System.Text;
+
 namespace Exercise03 {
     internal class Program {
         static void Main(string[] args) {
             var text = "Jackdaws love my big sphinx of quartz";
             #region
             Console.WriteLine("6.3.1");
-            Exercise1(text);
+            //Exercise1(text);
 
             Console.WriteLine("6.3.2");
-            Exercise2(text);
+            //Exercise2(text);
 
             Console.WriteLine("6.3.3");
             Exercise3(text);
 
             Console.WriteLine("6.3.4");
-            Exercise4(text);
+            //Exercise4(text);
 
             Console.WriteLine("6.3.5");
-            Exercise5(text);
+            //Exercise5(text);
 
             Console.WriteLine("6.3.99");
-            Exercise6(text);
+            //Exercise6(text);
             #endregion
         }
 
@@ -40,7 +42,13 @@ namespace Exercise03 {
         }
 
         private static void Exercise3(string text) {
+            var words = text.Split(' ');
+            var sb = new StringBuilder();
 
+            sb.Append(String.Join(" ", words));
+
+            //var result = sb.AppendJoin(" ", words);
+            Console.WriteLine(sb);
         }
 
         private static void Exercise4(string text) {
