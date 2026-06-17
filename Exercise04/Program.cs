@@ -5,18 +5,12 @@ namespace Exercise04 {
         static void Main(string[] args) {
             var line = "Novelist=谷崎潤一郎;BestWork=春琴抄;Born=1886";
 
-            var words = line.Split(';', '=');
-
-            for (int i = 0; i < words.Length; i++) {
-                if (i % 2 == 0) {
-                    words[i] = ToJapanese(words[i]);
-                    Console.Write(words[i]+':');
-                } else {
-                    Console.WriteLine(words[i]);
-                }
+            foreach (var words in line.Split(';')) {
+                var word = words.Split('=');
+                Console.WriteLine($"{ToJapanese(word[0])}:{word[1]}");
             }
-
         }
+
         static string ToJapanese(string key) {
             return key switch {
                 "Novelist" => "作家",
