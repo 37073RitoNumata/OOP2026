@@ -42,7 +42,8 @@ namespace Exercise02 {
         }
 
         private static void Exercise2(List<Book> books) {
-            //foreach(var book in books.Count(x =>)
+            //var book = books.Contains("C#" == books.Title);
+            //foreach (var item in book)
         }
 
         private static void Exercise3(List<Book> books) {
