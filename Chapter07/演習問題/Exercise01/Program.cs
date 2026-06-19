@@ -28,24 +28,25 @@ namespace Exercise01 {
         }
 
         private static void Exercise2(int[] numbers) {
-            foreach (var i in numbers.Reverse().Take(2)) {
+            foreach (var i in numbers.TakeLast(2)) {
                 Console.WriteLine(i);
             }
         }
 
         private static void Exercise3(int[] numbers) {
-            for (int i = 0; i < numbers.Length; i++) {
-                Console.WriteLine($"{numbers[i]:000}");
+            foreach (var number in numbers.Select(n => n.ToString("000"))) {
+                Console.WriteLine(number);
             }
         }
 
         private static void Exercise4(int[] numbers) {
-            foreach (var i in numbers.OrderBy(x => x).Take(3)) {
+            foreach (var i in numbers.OrderBy(n => n).Take(3)) {
                 Console.WriteLine(i);
             }
         }
 
         private static void Exercise5(int[] numbers) {
+                Console.WriteLine(numbers.Distinct().Count(n => n > 10));
         }
     }
 }
