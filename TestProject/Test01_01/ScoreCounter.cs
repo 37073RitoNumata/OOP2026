@@ -22,17 +22,21 @@
                 sales.Add(student);
             }
 
-
-
-
-
             return sales;
         }
 
         //メソッドの概要：
         public IDictionary<string, int> GetPerStudentScore() {
             var dict = new Dictionary<string, int>();
+            foreach (var student in _score) {
 
+                if (dict.ContainsKey(student.Subject))
+                    //登録されている場合
+                    dict[student.Subject] += student.Score; //点数を加算                                                           
+                else
+                    //登録されていない場合
+                    dict[student.Subject] = student.Score; //新規に点数を登録
+            }
 
 
 
