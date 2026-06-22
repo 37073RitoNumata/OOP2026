@@ -38,32 +38,31 @@ namespace Exercise02 {
 
         private static void Exercise1(List<Book> books) {
             var book = books.FirstOrDefault(x => x.Title == "ワンダフル・C#ライフ");
-            Console.WriteLine($"価格{book.Price}ページ数{book.Pages}");
+            Console.WriteLine("{0} {1}", book.Price, book.Pages);
         }
 
         private static void Exercise2(List<Book> books) {
-            //var book = books.Contains("C#" == books.Title);
-            //foreach (var item in book)
+            Console.WriteLine(books.Count(book => book.Title.Contains("C#")));
         }
 
         private static void Exercise3(List<Book> books) {
-            
+
         }
 
         private static void Exercise4(List<Book> books) {
-            
+
         }
 
         private static void Exercise5(List<Book> books) {
-            
+
         }
 
         private static void Exercise6(List<Book> books) {
-            
+
         }
 
         private static void Exercise7(List<Book> books) {
-            
+
         }
     }
 }
