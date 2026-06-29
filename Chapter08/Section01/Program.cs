@@ -51,7 +51,6 @@ namespace Section01 {
             }
         }
 
-
         private static int menuDisp() {
             Console.Write("**** メニュー ****\n1:一覧表示\n2:検索\n9:終了\n>");
             int num = int.Parse(Console.ReadLine());
@@ -74,9 +73,7 @@ namespace Section01 {
                     break;
                 } else {
                     Console.WriteLine("見つかりませんでした");
-                    break;
                 }
             }
         }
     }
-}
