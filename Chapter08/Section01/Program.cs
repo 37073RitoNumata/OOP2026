@@ -1,7 +1,4 @@
-﻿using System.Net.NetworkInformation;
-using System.Runtime.CompilerServices;
-
-namespace Section01 {
+﻿namespace Section01 {
     internal class Program {
         static private Dictionary<string, string> prefOfficeDict = new Dictionary<string, string>();
 
@@ -12,12 +9,14 @@ namespace Section01 {
             Console.WriteLine("県庁所在地の登録【入力終了：Ctrl + 'Z'】");
 
             while (true) {
+                //都道府県の入力
                 Console.Write("都道府県：");
                 pref = Console.ReadLine();
                 if (pref is null) {
                     break;
 
                 }
+                //県庁所在地の入力
                 Console.Write("県庁所在地：");
                 prefCaptalLocation = Console.ReadLine();
 
@@ -27,25 +26,28 @@ namespace Section01 {
                     var yn = Console.ReadLine();
 
                     if (yn == "Y") {
-                        //prefCaptalLocation == prefOfficeDict.
+                        prefOfficeDict[pref] = prefCaptalLocation;
                     }
+                } else {
+                    prefOfficeDict.Add(pref, prefCaptalLocation);
+                    Console.WriteLine();
                 }
-                prefOfficeDict.Add(pref, prefCaptalLocation);
-                Console.WriteLine();
             }
 
+            Boolean endFlag = false;
             while (true) {
 
                 switch (menuDisp()) {
-                    case (1):
+                    case (1)://一覧表示
                         allDisp();
                         break;
 
-                    case (2):
+                    case (2)://検索
                         searchPrefCaptalLocation();
                         break;
 
-                    case (9):
+                    case (9)://終了
+                        endFlag = true;
                         return;
                 }
             }
@@ -53,8 +55,12 @@ namespace Section01 {
 
         private static int menuDisp() {
             Console.Write("**** メニュー ****\n1:一覧表示\n2:検索\n9:終了\n>");
-            int num = int.Parse(Console.ReadLine());
-            return num;
+
+            if (int.TryParse(Console.ReadLine(), out int num)) {
+                return num;
+            }
+
+            return 0;
         }
 
         private static void allDisp() {
@@ -64,16 +70,15 @@ namespace Section01 {
         }
 
         private static void searchPrefCaptalLocation() {
-            foreach (var item in prefOfficeDict) {
-                Console.Write("都道府県：");
-                string search = Console.ReadLine();
 
-                if (prefOfficeDict.ContainsKey(search)) {
-                    Console.WriteLine($"{item.Key}の県庁所在地は{item.Value}です。");
-                    break;
-                } else {
-                    Console.WriteLine("見つかりませんでした");
-                }
+            Console.Write("都道府県：");
+            string? search = Console.ReadLine();
+
+            if (prefOfficeDict.ContainsKey(search)) {
+                Console.WriteLine($"{search}の県庁所在地は{prefOfficeDict[search]}です。");
+            } else {
+                Console.WriteLine("見つかりませんでした");
             }
         }
     }
+}
