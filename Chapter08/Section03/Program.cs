@@ -1,6 +1,4 @@
-﻿using Section03;
-
-namespace Setion03 {
+﻿namespace Section03 {
     internal class Program {
         static void Main(string[] args) {
             // コンストラクタの呼び出し
