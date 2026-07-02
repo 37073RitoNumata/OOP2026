@@ -5,6 +5,7 @@ public class Abbreviations {
     // コンストラクタ
     public Abbreviations() {
         var lines = File.ReadAllLines("./Abbreviations.txt");
+        //=で区切り、_dictに追加　例 _dict[0]=(Key:APEC,Value:アジア太平洋経済協力)
         _dict = lines.Select(line => line.Split('='))
                      .ToDictionary(x => x[0], x => x[1]);
     }
@@ -32,11 +33,11 @@ public class Abbreviations {
 
     // 8.2.1
     //Countプロパティを追加
-    public int Count => 
+    public int Count => _dict.Count;
 
 
     // 8.2.2（最終的に式形式で記述すること）
-    public bool Remove(string abb) => 
+    public bool Remove(string abb) => _dict.Remove(abb);
 
 
     // Dictionary<TKey, TValue>は、

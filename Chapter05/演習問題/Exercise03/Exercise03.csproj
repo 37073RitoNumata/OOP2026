@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Chapter05\演習問題\Exercise01\Exercise01.csproj" />
+    <ProjectReference Include="..\Exercise01\Exercise01.csproj" />
   </ItemGroup>
 
 </Project>
