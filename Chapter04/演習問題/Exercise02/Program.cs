@@ -12,27 +12,60 @@ namespace Exercise02 {
 
         private static void Exercise1() {
             //if-else文を使用
-            int num = int.Parse(Console.ReadLine());
-            if (num < 0) {
-                Console.WriteLine(num);
-            } else if (num <100) {
-                Console.WriteLine(num * 2);
-            } else if (num < 500) {
-                Console.WriteLine(num * 3);
+            var num = Console.ReadLine();
+            if (int.TryParse(num, out var result)) {
+
+                if (result < 0 || 500 <= result) {
+                    Console.WriteLine(result);
+                } else if (result < 100) {
+                    Console.WriteLine(result * 2);
+                } else if (result < 500) {
+                    Console.WriteLine(result * 3);
+                }
             } else {
-                Console.WriteLine(num);
+                Console.WriteLine("入力値に誤りがあります");
             }
         }
 
         private static void Exercise2() {
             //switch文を使用
+            var num = Console.ReadLine();
+            if (int.TryParse(num, out var result)) {
 
+                switch (result) {
+                    case < 0:
+                        Console.WriteLine(result);
+                        break;
+                    case < 100:
+                        Console.WriteLine(result * 2);
+                        break;
+
+                    case < 500:
+                        Console.WriteLine(result * 3);
+                        break;
+
+                    case >= 500:
+                        Console.WriteLine(result);
+                        break;
+                }
+            } else {
+                Console.WriteLine("入力値に誤りがあります");
+            }
         }
 
         private static void Exercise3() {
             //switch式を使用
-
-
+            var num = Console.ReadLine();
+            if (int.TryParse(num, out var result)) {
+                var siki = result switch {
+                    < 0 => result,
+                    < 100 => result * 2,
+                    < 500 => result * 3,
+                    _ => result
+                };
+            } else {
+                Console.WriteLine("入力値に誤りがあります");
+            }
         }
     }
 }
