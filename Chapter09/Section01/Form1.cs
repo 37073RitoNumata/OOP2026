@@ -1,13 +1,4 @@
-ï»¿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Section01 {
     public partial class Form1 : Form {
@@ -15,48 +6,39 @@ namespace Section01 {
             InitializeComponent();
         }
 
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e) {
-
-        }
-
         private void btGet_Click(object sender, EventArgs e) {
-            DateTime dt1 = dtpDate.Value;
-            tbAgeOut.Text = dt1.AddDays((double)nudDay.Value).ToString();
-
-            //if (DateTime.IsLeapYear(dt1.Year)) {
-            //    tbOut.Text = "ã†ã‚‹ã†å¹´ã§ã™";
-            //} else {
-            //    tbOut.Text = "ã†ã‚‹ã†å¹´ã§ã¯ã‚ã‚Šã¾ã›ã‚“";
-            //}
-
-            //switch (dt1.DayOfWeek) {
-            //    case DayOfWeek.Sunday:
-            //        Console.WriteLine("æ—¥æ›œæ—¥ã§ã™"); break;
-            //    case DayOfWeek.Monday:
-            //        Console.WriteLine("æœˆæ›œæ—¥ã§ã™"); break;
-            //    case DayOfWeek.Tuesday:
-            //        Console.WriteLine("ç«æ›œæ—¥ã§ã™"); break;
-            //    case DayOfWeek.Wednesday:
-            //        Console.WriteLine("æ°´æ›œæ—¥ã§ã™"); break;
-            //    case DayOfWeek.Thursday:
-            //        Console.WriteLine("æœ¨æ›œæ—¥ã§ã™"); break;
-            //    case DayOfWeek.Friday:
-            //        Console.WriteLine("é‡‘æ›œæ—¥ã§ã™"); break;
-            //    case DayOfWeek.Saturday:
-            //        Console.WriteLine("åœŸæ›œæ—¥ã§ã™"); break;
-            //}
+            DateTime date = dtpDate.Value;
+            tbOut.Text = date.AddDays((double)nudDay.Value).ToString();
         }
 
         private void btBirthCalc_Click(object sender, EventArgs e) {
-            DateTime birth = dtpBirth.Value; //ç”Ÿã¾ã‚ŒãŸæ—¥ä»˜
-            DateTime today = DateTime.Today; //ä»Šæ—¥ã®æ—¥ä»˜
-           
-            tbAgeOut.Text = $"ã‚ãªãŸã¯{GetAge(birth, today)}æ­³ã§ã™";
+            DateTime birth = dtpBirth.Value;     //¶‚Ü‚ê‚½“ú•t
+            DateTime today = DateTime.Now;    //¡“ú‚Ì“ú•t
 
-            TimeSpan ts = today.Date - birth.Date;
-            tbDateOut.Text = $"ç”Ÿã¾ã‚Œã¦ã‹ã‚‰{ts.Days}æ—¥ã§ã™";
+            //int age = today.Year - birth.Year;
+            //if(today < birth.AddYears(age)) {
+            //    age--;
+            //}
+
+            tbOut.Text = $"‚ ‚È‚½‚Í{GetAge(birth, today)}Î‚Å‚·";
+
+            TimeSpan ts = today - birth;
+            tbOut2.Text = $"¶‚Ü‚ê‚Ä‚©‚ç{ts.Days}“ú–Ú‚Å‚·";
+
+            var culture = new CultureInfo("ja-JP");
+            culture.DateTimeFormat.Calendar = new JapaneseCalendar();
+            var dayOfWeek = culture.DateTimeFormat.GetDayName(birth.DayOfWeek);
+
+            tbOut3.Text = $"¶‚Ü‚ê‚½{birth.Month}Œ{birth.Day}“ú‚Í‘æ{NthWeek(birth)}T‚Ì{dayOfWeek}‚Å‚·";
+
+            if (ts.Days % 365 == 0) {
+                tbOut4.Text = "¡“ú‚ª’a¶“ú‚Å‚·";
+            } else {
+                tbOut4.Text = (ts.Days % 365).ToString();
+            }
         }
 
+        //”N—î‚ğ‹‚ß‚éƒƒ\ƒbƒh
         static int GetAge(DateTime birthday, DateTime targetDay) {
             var age = targetDay.Year - birthday.Year;
             if (targetDay < birthday.AddYears(age)) {
@@ -64,19 +46,13 @@ namespace Section01 {
             }
             return age;
         }
-
-        private void dtpBirth_ValueChanged(object sender, EventArgs e) {
-
+        //w’è‚µ‚½“ú‚ª‘æ‰½T‚©‹‚ß‚é
+        static int NthWeek(DateTime date) {
+            var firstDay = new DateTime(date.Year, date.Month, 1);
+            var firstDayOfWeek = (int)(firstDay.DayOfWeek);
+            return (date.Day + firstDayOfWeek - 1) / 7 + 1;
         }
 
-
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e) {
-
-        }
 
     }
 }

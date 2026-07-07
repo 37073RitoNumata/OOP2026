@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            int[] array = new int[10];
+            int[] array = new int[20];
 
             //入力
             for (int i = 0; i < array.Length; i++)
