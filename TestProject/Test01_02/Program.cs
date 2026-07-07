@@ -130,9 +130,9 @@
         //　　　　  Canberra : 8文字
         //　　　　  Hong Kong : 9文字】
         private static void Exercise08(List<string> cities) {
-            //foreach (var city in cities) {
-            //    Console.WriteLine(city);
-            //}
+            foreach (var city in cities) {
+                Console.WriteLine($"{city}:{city.Length}文字");
+            }
         }
 
         //問題９　各都市名と文字数を文字数の昇順で表示
@@ -147,8 +147,9 @@
         //          Hong Kong : 9文字】
         private static void Exercise09(List<string> cities) {
 
-
-
+            foreach (var city in cities.OrderBy(x => x.Length)) {
+                Console.WriteLine($"{city} : {city.Length}文字");
+            }
         }
 
         //問題１０　６文字の都市名を表示
@@ -157,7 +158,9 @@
         //          Berlin】
         private static void Exercise10(List<string> cities) {
 
-
+            foreach (var city in cities.Where(city => city.Length == 6)) {
+                Console.WriteLine(city);
+            }
         }
     }
 }
