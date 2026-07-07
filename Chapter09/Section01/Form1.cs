@@ -50,19 +50,15 @@ namespace Section01 {
         private void btBirthCalc_Click(object sender, EventArgs e) {
             DateTime birth = dtpBirth.Value; //生まれた日付
             DateTime today = DateTime.Today; //今日の日付
-           
-            tbAgeOut.Text = $"あなたは{GetAge(birth, today)}歳です";
 
-            TimeSpan ts = today.Date - birth.Date;
-            tbDateOut.Text = $"生まれてから{ts.Days}日です";
-        }
+            //TimeSpan diff = today.Date - birth.Date;
+            //tbAgeOut.Text = (diff.Days / 365) + "歳";
+            //tbDateOut.Text = diff + "日経過";
 
-        static int GetAge(DateTime birthday, DateTime targetDay) {
-            var age = targetDay.Year - birthday.Year;
-            if (targetDay < birthday.AddYears(age)) {
+            int age = today.Year- birth.Year;
+            if(today < birth.AddYears(age)) {
                 age--;
             }
-            return age;
         }
 
         private void dtpBirth_ValueChanged(object sender, EventArgs e) {
