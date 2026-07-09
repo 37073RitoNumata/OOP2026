@@ -12,8 +12,8 @@ namespace Section01 {
         }
 
         private void btBirthCalc_Click(object sender, EventArgs e) {
-            DateTime birth = dtpBirth.Value;     //生まれた日付
-            DateTime today = DateTime.Now;    //今日の日付
+            DateTime birth = dtpBirth.Value.Date;     //生まれた日付
+            DateTime today = DateTime.Today;    //今日の日付
 
             //int age = today.Year - birth.Year;
             //if(today < birth.AddYears(age)) {
@@ -23,7 +23,7 @@ namespace Section01 {
             tbOut.Text = $"あなたは{GetAge(birth, today)}歳です";
 
             TimeSpan ts = today - birth;
-            tbOut2.Text = $"生まれてから{ts.Days}日目です";
+            tbOut2.Text = $"生まれてから{ts.TotalHours}日目です";
 
             var culture = new CultureInfo("ja-JP");
             culture.DateTimeFormat.Calendar = new JapaneseCalendar();
@@ -31,12 +31,34 @@ namespace Section01 {
 
             tbOut3.Text = $"生まれた{birth.Month}月{birth.Day}日は第{NthWeek(birth)}週の{dayOfWeek}です";
 
-            if (ts.Days % 365 == 0) {
+            //if (ts.Days % 365 == 0) {
+            //    tbOut4.Text = "今日が誕生日です";
+
+            //} else if (ts.Days < 365) {
+            //    tbOut4.Text = (ts.Days).ToString();
+
+            //} else if (ts.Days > 365) {
+            //    tbOut4.Text = (ts.Days).ToString();
+            //}
+            //今年の誕生日を作成
+            DateTime thisYearBirthday = new DateTime(today.Year, birth.Month, birth.Day);
+
+            //すでに誕生日が過ぎているか
+            if(thisYearBirthday < today) {
+                //来年の誕生日を作成する
+                thisYearBirthday = thisYearBirthday.AddYears(1);
+            }
+
+            var span = thisYearBirthday - today;
+
+            if (span.Days == 0) {
                 tbOut4.Text = "今日が誕生日です";
             } else {
-                tbOut4.Text = (ts.Days % 365).ToString();
+                tbOut4.Text = $"誕生日まであと{span.Days}日です";
             }
+
         }
+
 
         //年齢を求めるメソッド
         static int GetAge(DateTime birthday, DateTime targetDay) {
