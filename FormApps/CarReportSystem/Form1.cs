@@ -11,6 +11,9 @@ namespace CarReportSystem {
             InitializeComponent();
             dgvRecords.DataSource = listCarReports;
         }
+        private void Form1_Load(object sender, EventArgs e) {
+
+        }
         //追加ボタンイベントハンドラ
         private void btAddRecord_Click(object sender, EventArgs e) {
 
@@ -34,9 +37,11 @@ namespace CarReportSystem {
             };
             listCarReports.Add(carReport);
 
-            InputItemAllClear();
+            //入力履歴の保持
             SetCbAuthor(carReport.Author);
             SetCarName(carReport.CarName);
+
+            InputItemAllClear();
         }
 
         private MakerGroup GetRadioButtonMaker() {
@@ -112,7 +117,7 @@ namespace CarReportSystem {
         //記録者の入力履歴をコンボボックスへ登録（重複なし）
         private void SetCbAuthor(string author) {
             //未登録なら登録
-            if (!author.Contains(cbAuthor.Text)){
+            if (!author.Contains(cbAuthor.Text)) {
                 cbAuthor.Items.Add(author);
             }
         }
@@ -122,6 +127,15 @@ namespace CarReportSystem {
             if (!carName.Contains(cbCarName.Text)) {
                 cbCarName.Items.Add(carName);
             }
+        }
+
+        private void btDeletePicture_Click(object sender, EventArgs e) {
+            pbPicture.Image = null;
+        }
+
+        private void btDeleteRecord_Click(object sender, EventArgs e) {
+            //選択されているリストを消去
+            listCarReports.RemoveAt(dgvRecords.CurrentRow.Index);
         }
     }
 }
