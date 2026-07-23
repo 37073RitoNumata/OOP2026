@@ -175,6 +175,7 @@ namespace CarReportSystem {
         }
 
         private void dgvRecord_SelectionChanged(object sender, EventArgs e) {
+
             if (dgvRecords.CurrentRow is null
                 || !dgvRecords.CurrentRow.Selected) return;
 
@@ -186,6 +187,17 @@ namespace CarReportSystem {
             pbPicture.Image = (Image)dgvRecords.CurrentRow.Cells["Picture"].Value;
 
             InputItemUpdate();//データグリッドビューを更新したら呼ぶメソッド
+        }
+
+        private void 終了ToolStripMenuItem_Click(object sender, EventArgs e) {
+            Application.Exit();
+        }
+
+        private void 色設定ToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (cdColor.ShowDialog() == DialogResult.OK) {
+                // 選択された色をフォームに反映
+                BackColor = cdColor.Color;
+            }
         }
     }
 }
