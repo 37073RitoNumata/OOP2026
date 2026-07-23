@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Xml;
 using static CarReportSystem.CarReport;
 
 namespace CarReportSystem {
@@ -197,6 +198,18 @@ namespace CarReportSystem {
             if (cdColor.ShowDialog() == DialogResult.OK) {
                 // 選択された色をフォームに反映
                 BackColor = cdColor.Color;
+            }
+        }
+
+        //フォームが閉じたら呼ばれるイベントハンドラ
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
+            //設定ファイルへ色情報を保存する処理（シリアル化）
+            //P284以降を参考にする（ファイル名：setting.xml）
+
+
+            using (var writer = XmlWriter.Create("setting.xml")) {
+                var serializer = new XmlSelializer(Settings.GetType());
+                serializer.Serialize(writer, settings);
             }
         }
     }
