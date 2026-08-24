@@ -63,6 +63,8 @@
             tsslbMessage = new ToolStripStatusLabel();
             ofdFilOpen = new OpenFileDialog();
             cdColor = new ColorDialog();
+            sfdReportFileSave = new SaveFileDialog();
+            ofdReportFileSave = new OpenFileDialog();
             Group1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvRecords).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbPicture).BeginInit();
@@ -444,6 +446,10 @@
             // 
             ofdFilOpen.FileName = "openFileDialog1";
             // 
+            // ofdReportFileSave
+            // 
+            ofdReportFileSave.FileName = "openFileDialog1";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -475,6 +481,7 @@
             MainMenuStrip = menuStrip1;
             Name = "Form1";
             Text = "試乗レポート管理システム";
+            FormClosed += Form1_FormClosed;
             Load += Form1_Load;
             Group1.ResumeLayout(false);
             Group1.PerformLayout();
@@ -530,5 +537,7 @@
         private ToolStripStatusLabel tsslbMessage;
         private OpenFileDialog ofdFilOpen;
         private ColorDialog cdColor;
+        private SaveFileDialog sfdReportFileSave;
+        private OpenFileDialog ofdReportFileSave;
     }
 }
