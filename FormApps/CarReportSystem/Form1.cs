@@ -28,9 +28,13 @@ namespace CarReportSystem {
                     //P286以降を参考にする（ファイル名：setting.xml）
                     using (var reader = XmlReader.Create("setting.xml")) {
                         var serializer = new XmlSerializer(typeof(Settings));
-                        settings = serializer.Deserialize(reader) as Settings;
-                        //背景色設定
-                        BackColor = Color.FromArgb(settings.MainFormBackColor);
+
+                        //settings = serializer.Deserialize(reader) as Settings;
+                        if (serializer.Deserialize(reader) is Settings loadedSettings) {
+                            settings = loadedSettings;
+                            //背景色設定
+                            BackColor = Color.FromArgb(settings.MainFormBackColor);
+                        }
                     }
                 }
                 catch (Exception ex) {
@@ -56,10 +60,10 @@ namespace CarReportSystem {
             /********************************/
 
             var carReport = new CarReport {
-                Date = dtpDate.Value,
-                Author = cbAuthor.Text,
+                Date = dtpDate.Value.Date,
+                Author = cbAuthor.Text.Trim(),
                 Maker = GetRadioButtonMaker(),
-                CarName = cbCarName.Text,
+                CarName = cbCarName.Text.Trim(),
                 Report = tbReport.Text,
                 Picture = pbPicture.Image,
             };
@@ -67,11 +71,11 @@ namespace CarReportSystem {
 
 
             //入力履歴の保持
-            SetCbAuthor(carReport.Author);
-            SetCbCarName(carReport.CarName);
+            SetCbAuthor(cbAuthor.Text.Trim());
+            SetCbCarName(cbCarName.Text.Trim());
 
             dgvRecords.ClearSelection(); //セルの選択を解除
-            InputItemAllClear(); //データグリッドビューを更新したら呼ぶメソッド
+            InputItemsUpdate(); //データグリッドビューを更新したら呼ぶメソッド
         }
 
         private MakerGroup GetRadioButtonMaker() {
@@ -137,14 +141,14 @@ namespace CarReportSystem {
         //記録者の入力履歴をコンボボックスへ登録（重複なし）
         private void SetCbAuthor(string author) {
             //未登録なら登録
-            if (!author.Contains(cbAuthor.Text)) {
+            if (!cbAuthor.Items.Contains(author)) {
                 cbAuthor.Items.Add(author);
             }
         }
 
         //車名の入力履歴をコンボボックスへ登録（重複なし）
         private void SetCbCarName(string carName) {
-            if (!carName.Contains(cbCarName.Text)) {
+            if (!cbCarName.Items.Contains(carName)) {
                 cbCarName.Items.Add(carName);
             }
         }
@@ -159,17 +163,11 @@ namespace CarReportSystem {
 
             //選択されているリストを消去
             listCarReports.RemoveAt(dgvRecords.CurrentRow.Index);
-            InputItemUpdate(); 
 
-            dtpDate.Value = listCarReports[dgvRecords.CurrentRow.Index].Date;
-            cbAuthor.Text = listCarReports[dgvRecords.CurrentRow.Index].Author;
-            SetRadioButtonMaker(listCarReports[dgvRecords.CurrentRow.Index].Maker);
-            cbCarName.Text = listCarReports[dgvRecords.CurrentRow.Index].CarName;
-            tbReport.Text = listCarReports[dgvRecords.CurrentRow.Index].Report;
-            pbPicture.Image = listCarReports[dgvRecords.CurrentRow.Index].Picture;
+            InputItemsUpdate(); //データグリッドビューを更新したら呼ぶメソッド
         }
 
-        private void InputItemUpdate() {
+        private void InputItemsUpdate() {
             if (!dgvRecords.CurrentRow.Selected) {
                 InputItemAllClear();
             }
@@ -214,7 +212,7 @@ namespace CarReportSystem {
             tbReport.Text = carReport.Report;
             pbPicture.Image = carReport.Picture;
 
-            InputItemUpdate();//データグリッドビューを更新したら呼ぶメソッド
+            InputItemsUpdate();//データグリッドビューを更新したら呼ぶメソッド
         }
 
         private void 終了ToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -223,8 +221,8 @@ namespace CarReportSystem {
 
         private void 色設定ToolStripMenuItem_Click(object sender, EventArgs e) {
             if (cdColor.ShowDialog() == DialogResult.OK) {
-                // 選択された色をフォームに反映
                 BackColor = cdColor.Color;
+                // 選択された色をフォームに反映
                 settings.MainFormBackColor = cdColor.Color.ToArgb();
             }
         }
@@ -241,8 +239,12 @@ namespace CarReportSystem {
             }
         }
 
-        private void 保存ToolStripMenuItem_Click(object sender, EventArgs e) {
+        private void 保存ToolStripMenuItem_Click_1(object sender, EventArgs e) {
             reportSaveFile();
+        }
+
+        private void 開くToolStripMenuItem_Click(object sender, EventArgs e) {
+            reportOpenFile();
         }
 
         //ファイルセーブ処理
@@ -253,10 +255,11 @@ namespace CarReportSystem {
 #pragma warning disable SYSLIB0011
                     var bf = new BinaryFormatter();
 #pragma warning restore SYSLIB0011
-
-
-
+                    using (FileStream fs = File.Open(sfdReportFileSave.FileName, FileMode.Create)) {
+                        bf.Serialize(fs, listCarReports);
+                    }
                 }
+
                 catch (Exception ex) {
                     tsslbMessage.Text = "ファイル書き出しエラー";
                     MessageBox.Show(ex.Message);
@@ -266,10 +269,35 @@ namespace CarReportSystem {
 
         //ファイルオープン処理
         private void reportOpenFile() {
+            if (ofdReportFileOpen.ShowDialog() == DialogResult.OK) {
+                try {
+                    //逆シリアル化でバイナリ形式を取り込む
+#pragma warning disable SYSLIB0011
+                    var bf = new BinaryFormatter();
+#pragma warning restore SYSLIB0011
+                    using (FileStream fs = File.Open(ofdReportFileOpen.FileName, //ファイル名
+                        FileMode.Open, //ファイルモード
+                        FileAccess.Read //アクセス
+                        )) {
 
+                        listCarReports = (BindingList<CarReport>)bf.Deserialize(fs);
+                        dgvRecords.DataSource = listCarReports;
+                    }
+                    //コンボボックスの履歴をすべて消す
+                    cbAuthor.Items.Clear();
+                    cbCarName.Items.Clear();
 
-
-
+                    //コンボボックスの履歴を再登録
+                    foreach (var report in listCarReports) {
+                        SetCbAuthor(report.Author);
+                        SetCbCarName(report.CarName);
+                    }
+                }
+                catch (Exception ex) {
+                    tsslbMessage.Text = "ファイル読み出しエラー";
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }
 }

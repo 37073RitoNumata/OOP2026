@@ -64,7 +64,7 @@
             ofdFilOpen = new OpenFileDialog();
             cdColor = new ColorDialog();
             sfdReportFileSave = new SaveFileDialog();
-            ofdReportFileSave = new OpenFileDialog();
+            ofdReportFileOpen = new OpenFileDialog();
             Group1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvRecords).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbPicture).BeginInit();
@@ -354,9 +354,10 @@
             // pbPicture
             // 
             pbPicture.BorderStyle = BorderStyle.FixedSingle;
-            pbPicture.Location = new Point(538, 86);
+            pbPicture.Location = new Point(538, 99);
             pbPicture.Name = "pbPicture";
             pbPicture.Size = new Size(298, 253);
+            pbPicture.SizeMode = PictureBoxSizeMode.StretchImage;
             pbPicture.TabIndex = 9;
             pbPicture.TabStop = false;
             // 
@@ -381,12 +382,14 @@
             開くToolStripMenuItem.Name = "開くToolStripMenuItem";
             開くToolStripMenuItem.Size = new Size(155, 22);
             開くToolStripMenuItem.Text = "開く...";
+            開くToolStripMenuItem.Click += 開くToolStripMenuItem_Click;
             // 
             // 保存ToolStripMenuItem
             // 
             保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
             保存ToolStripMenuItem.Size = new Size(155, 22);
             保存ToolStripMenuItem.Text = "保存...";
+            保存ToolStripMenuItem.Click += 保存ToolStripMenuItem_Click_1;
             // 
             // toolStripSeparator1
             // 
@@ -446,9 +449,9 @@
             // 
             ofdFilOpen.FileName = "openFileDialog1";
             // 
-            // ofdReportFileSave
+            // ofdReportFileOpen
             // 
-            ofdReportFileSave.FileName = "openFileDialog1";
+            ofdReportFileOpen.FileName = "openFileDialog1";
             // 
             // Form1
             // 
@@ -538,6 +541,6 @@
         private OpenFileDialog ofdFilOpen;
         private ColorDialog cdColor;
         private SaveFileDialog sfdReportFileSave;
-        private OpenFileDialog ofdReportFileSave;
+        private OpenFileDialog ofdReportFileOpen;
     }
 }
