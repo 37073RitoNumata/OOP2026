@@ -104,7 +104,7 @@ namespace CarReportSystem {
         }
 
         private void InputItemAllClear() {
-            dtpDate.Value = DateTime.Now;
+            dtpDate.Value = DateTime.Today;
             cbAuthor.Text = String.Empty;
             rbOther.Checked = true;
             cbCarName.Text = String.Empty;
@@ -161,14 +161,18 @@ namespace CarReportSystem {
             if ((dgvRecords.CurrentRow is null)
                 || (!dgvRecords.CurrentRow.Selected)) return;
 
-            //選択されているリストを消去
-            listCarReports.RemoveAt(dgvRecords.CurrentRow.Index);
+            //削除したいインデックスを指定してリストから削除
+            if(dgvRecords.CurrentRow?.DataBoundItem is not CarReport carReport) {
+                tsslbMessage.Text = "削除するレポートを選択してください";
+                return;
+            }
+            listCarReports.Remove(carReport);
 
             InputItemsUpdate(); //データグリッドビューを更新したら呼ぶメソッド
         }
 
         private void InputItemsUpdate() {
-            if (!dgvRecords.CurrentRow.Selected) {
+            if (dgvRecords.CurrentRow is null || !dgvRecords.CurrentRow.Selected) {
                 InputItemAllClear();
             }
         }
@@ -185,11 +189,16 @@ namespace CarReportSystem {
                 return;
             }
 
+            if (dgvRecords.CurrentRow?.DataBoundItem is not CarReport carReport) {
+                tsslbMessage.Text = "修正するレポートを選択してください";
+                return;
+            }
+
             //カーレポート管理用リストの該当する要素のデータを書き換える
-            listCarReports[dgvRecords.CurrentRow.Index].Date = dtpDate.Value;
-            listCarReports[dgvRecords.CurrentRow.Index].Author = cbAuthor.Text;
+            listCarReports[dgvRecords.CurrentRow.Index].Date = dtpDate.Value.Date;
+            listCarReports[dgvRecords.CurrentRow.Index].Author = cbAuthor.Text.Trim();
             listCarReports[dgvRecords.CurrentRow.Index].Maker = GetRadioButtonMaker();
-            listCarReports[dgvRecords.CurrentRow.Index].CarName = cbCarName.Text;
+            listCarReports[dgvRecords.CurrentRow.Index].CarName = cbCarName.Text.Trim();
             listCarReports[dgvRecords.CurrentRow.Index].Report = tbReport.Text;
             listCarReports[dgvRecords.CurrentRow.Index].Picture = pbPicture.Image;
 
