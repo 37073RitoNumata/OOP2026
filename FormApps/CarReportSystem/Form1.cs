@@ -30,6 +30,7 @@ namespace CarReportSystem {
                         var serializer = new XmlSerializer(typeof(Settings));
 
                         //settings = serializer.Deserialize(reader) as Settings;
+
                         if (serializer.Deserialize(reader) is Settings loadedSettings) {
                             settings = loadedSettings;
                             //îwåiêFê›íË
