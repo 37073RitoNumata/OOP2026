@@ -29,11 +29,12 @@ namespace CarReportSystem {
         public void Load() {
             //ファイルが存在するか？
             if (!File.Exists(FileName))
-                return;
+                return ;
 
             using var reader = XmlReader.Create(FileName);
             var serializer = new XmlSerializer(typeof(SettingsData));
 
+            //設定ファイルを読み込み背景色を設定する（逆シリアル化）
             if (serializer.Deserialize(reader) is SettingsData data) {
                 MainFormBackColor = data.MainFormBackColor;
             }
@@ -44,6 +45,8 @@ namespace CarReportSystem {
                 MainFormBackColor = MainFormBackColor
             };
 
+            //設定ファイルへ色情報を保存する処理（シリアル化）
+            //P284以降を参考にする（ファイル名：setting.xml)
             using var writer = XmlWriter.Create(FileName);
             var serializer = new XmlSerializer(typeof(SettingsData));
             serializer.Serialize(writer, data);
