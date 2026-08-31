@@ -50,7 +50,7 @@ public partial class Form1 : Form {
         foreach(var product in _repository.GetAll()) {
             _products.Add(product);
         }
-        dgvProducts.CrearSelection()
+        dgvProducts.ClearSelection();
     }
 
     private bool TryGetInput(out string name, out int price) {
