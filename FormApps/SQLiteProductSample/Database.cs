@@ -22,6 +22,7 @@ public static class Database {
     }
 
     public static void Initialize() {
+
         //接続オブジェクトを生成する
         using var connection = GetConnection();
 
