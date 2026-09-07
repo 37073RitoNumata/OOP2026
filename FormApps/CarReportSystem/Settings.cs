@@ -6,55 +6,61 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace CarReportSystem {
-    public class Settings {
+namespace CarReportSystem;
+public class Settings
+{
 
-        private const string FileName = "settings.xml";
+	private const string FileName = "settings.xml";
 
-        //唯一のSettingsオブジェクト
-        private static readonly Settings _instance = new Settings();
+	//唯一のSettingsオブジェクト
+	private static readonly Settings _instance = new Settings();
 
-        //メイン画面に設定した色情報
-        public int MainFormBackColor { get; set; }
-            = SystemColors.Control.ToArgb();
+	//メイン画面に設定した色情報
+	public int MainFormBackColor { get; set; }
+		= SystemColors.Control.ToArgb();
 
-        //唯一のオブジェクトを取得する
-        public static Settings Instance {
-            get { return _instance; }
-        }
+	//唯一のオブジェクトを取得する
+	public static Settings Instance
+	{
+		get { return _instance; }
+	}
 
-        //外部からnewできないようにする
-        private Settings() { }
+	//外部からnewできないようにする
+	private Settings() { }
 
-        public void Load() {
-            //ファイルが存在するか？
-            if (!File.Exists(FileName))
-                return ;
+	public void Load()
+	{
+		//ファイルが存在するか？
+		if (!File.Exists(FileName))
+			return;
 
-            using var reader = XmlReader.Create(FileName);
-            var serializer = new XmlSerializer(typeof(SettingsData));
+		using var reader = XmlReader.Create(FileName);
+		var serializer = new XmlSerializer(typeof(SettingsData));
 
-            //設定ファイルを読み込み背景色を設定する（逆シリアル化）
-            if (serializer.Deserialize(reader) is SettingsData data) {
-                MainFormBackColor = data.MainFormBackColor;
-            }
-        }
+		//設定ファイルを読み込み背景色を設定する（逆シリアル化）
+		if (serializer.Deserialize(reader) is SettingsData data)
+		{
+			MainFormBackColor = data.MainFormBackColor;
+		}
+	}
 
-        public void Save() {
-            var data = new SettingsData {
-                MainFormBackColor = MainFormBackColor
-            };
+	public void Save()
+	{
+		var data = new SettingsData
+		{
+			MainFormBackColor = MainFormBackColor
+		};
 
-            //設定ファイルへ色情報を保存する処理（シリアル化）
-            //P284以降を参考にする（ファイル名：setting.xml)
-            using var writer = XmlWriter.Create(FileName);
-            var serializer = new XmlSerializer(typeof(SettingsData));
-            serializer.Serialize(writer, data);
-        }
-    }
+		//設定ファイルへ色情報を保存する処理（シリアル化）
+		//P284以降を参考にする（ファイル名：setting.xml)
+		using var writer = XmlWriter.Create(FileName);
+		var serializer = new XmlSerializer(typeof(SettingsData));
+		serializer.Serialize(writer, data);
+	}
+}
 
-    //XML保存用のクラス
-    public class SettingsData {
-        public int MainFormBackColor { get; set; }
-    }
+//XML保存用のクラス
+public class SettingsData
+{
+	public int MainFormBackColor { get; set; }
 }
