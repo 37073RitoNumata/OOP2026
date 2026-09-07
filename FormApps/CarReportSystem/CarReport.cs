@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CarReportSystem;
-
+[Serializable]
 public sealed class CarReport
 {
     //列挙型

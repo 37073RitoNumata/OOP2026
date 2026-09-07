@@ -1,6 +1,8 @@
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 using static CarReportSystem.CarReport;
 
@@ -10,10 +12,12 @@ namespace CarReportSystem {
         //カーレポート管理用リスト
         BindingList<CarReport> listCarReports = new BindingList<CarReport>();
 
-        //設定クラスのオブジェクトを生成
-        //Settings settings = Settings.Instance;
+		//設定クラスのオブジェクトを生成
+		//Settings settings = Settings.Instance;
 
-        public Form1() {
+		private readonly CarReportRepository Repository = new();
+
+		public Form1() {
             InitializeComponent();
             dgvRecords.DataSource = listCarReports;
         }
@@ -179,8 +183,23 @@ namespace CarReportSystem {
                 return;
             }
 
-            //カーレポート管理用リストの該当する要素のデータを書き換える
-            listCarReports[dgvRecords.CurrentRow.Index].Date = dtpDate.Value.Date;
+			try
+			{
+				Repository.Update(carReport);
+
+				Reload();
+				ClearInput();
+
+				tsslMessage.Text = "商品を修正しました。";
+			}
+			catch (Exception ex)
+			{
+				ShowError("修正エラー", ex);
+			}
+			Repository.Update(carReport);
+
+			//カーレポート管理用リストの該当する要素のデータを書き換える
+			listCarReports[dgvRecords.CurrentRow.Index].Date = dtpDate.Value.Date;
             listCarReports[dgvRecords.CurrentRow.Index].Author = cbAuthor.Text.Trim();
             listCarReports[dgvRecords.CurrentRow.Index].Maker = GetRadioButtonMaker();
             listCarReports[dgvRecords.CurrentRow.Index].CarName = cbCarName.Text.Trim();
@@ -192,7 +211,7 @@ namespace CarReportSystem {
 
             dgvRecords.Refresh(); //データグリッドビューの更新
             tsslbMessage.Text = "レポートを修正しました。";
-        }
+		}
 
         private void dgvRecord_SelectionChanged(object sender, EventArgs e) {
 
@@ -287,5 +306,15 @@ namespace CarReportSystem {
                 }
             }
         }
-    }
+
+		private void ShowError(string title, Exception ex)
+		{
+			tsslbMessage.Text = title;
+			MessageBox.Show(
+				ex.Message,
+				title,
+				MessageBoxButtons.OK,
+				MessageBoxIcon.Error);
+		}
+	}
 }
