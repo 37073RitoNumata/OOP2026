@@ -22,7 +22,18 @@ namespace CarReportSystem
 		public Form1()
 		{
 			InitializeComponent();
+
+			//ProductクラスのプロパティからDataGridView列を自動生成する
+			dgvRecords.AutoGenerateColumns = true;
+
+			//DataGridViewのデータ元としてBindingListを設定する
 			dgvRecords.DataSource = listCarReports;
+
+			//起動直後にDBから商品一覧を読み込む
+			ReloadCarReports();
+
+			//使用中のDBファイルの場所をステータスバーに表示する
+			tsslbMessage.Text = $"DB:{Database.FilePath}";
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -155,19 +166,20 @@ namespace CarReportSystem
 			}
 			/********************************/
 
-			var carReport = new CarReport
-			{
-				Date = dtpDate.Value.Date,
-				Author = cbAuthor.Text.Trim(),
-				Maker = GetRadioButtonMaker(),
-				CarName = cbCarName.Text.Trim(),
-				Report = tbReport.Text,
-				Picture = pbPicture.Image,
-			};
-
 			try
 			{
+				var carReport = new CarReport
+				{
+					Date = dtpDate.Value.Date,
+					Author = cbAuthor.Text.Trim(),
+					Maker = GetRadioButtonMaker(),
+					CarName = cbCarName.Text.Trim(),
+					Report = tbReport.Text,
+					Picture = pbPicture.Image,
+				};
+
 				_repository.Add(carReport);
+
 				ReloadCarReports();
 				ClearInput();
 
@@ -177,7 +189,6 @@ namespace CarReportSystem
 			{
 				ShowError("登録エラー", ex);
 			}
-			listCarReports.Add(carReport);
 
 
 			//入力履歴の保持
@@ -210,24 +221,27 @@ namespace CarReportSystem
 				return;
 			}
 
-			var updatedReport = new CarReport
-			{
-				Id = selectedCarReport.Id,
-				Date = dtpDate.Value.Date,
-				Author = cbAuthor.Text.Trim(),
-				Maker = GetRadioButtonMaker(),
-				CarName = cbCarName.Text.Trim(),
-				Report = tbReport.Text,
-				Picture = pbPicture.Image,
-			};
-
 			try
 			{
-				_repository.Update(updatedReport);
+				var updatedCarReport = new CarReport
+				{
+					Id = selectedCarReport.Id,
+					Date = dtpDate.Value.Date,
+					Author = cbAuthor.Text.Trim(),
+					Maker = GetRadioButtonMaker(),
+					CarName = cbCarName.Text.Trim(),
+					Report = tbReport.Text,
+					Picture = pbPicture.Image,
+				};
+
+				_repository.Update(updatedCarReport);
+
 				ReloadCarReports();
 				ClearInput();
+
 				SetCbAuthor(cbAuthor.Text.Trim());
 				SetCbCarName(cbCarName.Text.Trim());
+
 				tsslbMessage.Text = "レポートを修正しました。";
 			}
 			catch (Exception ex)
@@ -260,8 +274,10 @@ namespace CarReportSystem
 			try
 			{
 				_repository.Delete(selectedcarReport.Id);
+
 				ReloadCarReports();
 				ClearInput();
+
 				tsslbMessage.Text = "レポートを削除しました。";
 			}
 			catch (Exception ex)
@@ -271,7 +287,6 @@ namespace CarReportSystem
 			InputItemsUpdate(); //データグリッドビューを更新したら呼ぶメソッド
 		}
 
-		//データグリッドビューの内容をリロードするメソッド
 		private void ReloadCarReports()
 		{
 			listCarReports.Clear();
@@ -282,13 +297,11 @@ namespace CarReportSystem
 			dgvRecords.ClearSelection(); //セルの選択を解除
 		}
 
-		//データグリッドビューの内容をリロードするメソッド
 		private void ClearInput()
 		{
 			tbReport.Clear();
 		}
-		
-		//データグリッドビューの内容をリロードするメソッド
+
 		private void dgvRecord_SelectionChanged(object sender, EventArgs e)
 		{
 

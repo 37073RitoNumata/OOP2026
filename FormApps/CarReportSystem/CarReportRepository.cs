@@ -1,6 +1,7 @@
 ﻿using CarReportSystem;
 using Microsoft.Data.Sqlite;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 using System.Xml.Linq;
 using static CarReportSystem.CarReport;
 
@@ -42,7 +43,7 @@ internal class CarReportRepository
 				Maker = (MakerGroup)reader.GetInt32(3),
 				CarName = reader.GetString(4),
 				Report = reader.GetString(5),
-				Picture = reader.IsDBNull(6) ? null : Image.FromStream(new MemoryStream((byte[])reader[6]))
+				Picture = reader.IsDBNull(6) ? null : BytesToImage(reader.GetFieldValue<byte[]>(6))
 			});
 		}
 		return carReports;
@@ -75,7 +76,7 @@ internal class CarReportRepository
 		command.Parameters.AddWithValue("$maker", carReport.Maker);
 		command.Parameters.AddWithValue("$carName", carReport.CarName);
 		command.Parameters.AddWithValue("$report", carReport.Report);
-		command.Parameters.AddWithValue("$picture", (object?)carReport.Picture ?? DBNull.Value);
+		command.Parameters.AddWithValue("$picture", carReport.Picture);
 
 		//結果行を返さないSQLを実行する
 		var result = command.ExecuteScalar();
@@ -116,7 +117,7 @@ internal class CarReportRepository
 		command.Parameters.AddWithValue("$maker", carReport.Maker);
 		command.Parameters.AddWithValue("$carName", carReport.CarName);
 		command.Parameters.AddWithValue("$report", carReport.Report);
-		command.Parameters.AddWithValue("$picture", carReport.Picture);
+		command.Parameters.AddWithValue("$picture", ImageToBytes(carReport.Picture));
 		command.Parameters.AddWithValue("$id", carReport.Id);
 
 		//更新件数が0なら対象が存在しない
@@ -143,6 +144,26 @@ internal class CarReportRepository
 
 		command.Parameters.AddWithValue("$id", id);
 		command.ExecuteNonQuery();
+	}
+
+	// ImageをSQLiteへ保存できるbyte[]へ変換する
+	private static byte[]? ImageToBytes(Image? image)
+	{
+		if (image is null) return null;
+
+		using var stream = new MemoryStream();
+		// DBへはPNG形式で保存
+		image.Save(stream, ImageFormat.Png);
+		return stream.ToArray();
+	}
+
+	// SQLiteのBLOB（byte[]）をImageへ変換する
+	private static Image BytesToImage(byte[] data)
+	{
+		using var stream = new MemoryStream(data);
+		using var image = Image.FromStream(stream);
+		// MemoryStream破棄後も利用できるようBitmapとしてコピーする。
+		return new Bitmap(image);
 	}
 }
 
