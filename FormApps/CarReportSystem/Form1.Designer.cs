@@ -289,6 +289,7 @@
 			// 
 			// btPicOpen
 			// 
+			btPicOpen.BackColor = SystemColors.ButtonHighlight;
 			btPicOpen.FlatStyle = FlatStyle.Flat;
 			btPicOpen.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
 			btPicOpen.Location = new Point(623, 42);
@@ -296,11 +297,12 @@
 			btPicOpen.Size = new Size(116, 38);
 			btPicOpen.TabIndex = 6;
 			btPicOpen.Text = "開く...";
-			btPicOpen.UseVisualStyleBackColor = true;
+			btPicOpen.UseVisualStyleBackColor = false;
 			btPicOpen.Click += btPicOpen_Click;
 			// 
 			// btDeletePicture
 			// 
+			btDeletePicture.BackColor = SystemColors.ButtonHighlight;
 			btDeletePicture.FlatStyle = FlatStyle.Flat;
 			btDeletePicture.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
 			btDeletePicture.Location = new Point(745, 43);
@@ -308,7 +310,7 @@
 			btDeletePicture.Size = new Size(91, 38);
 			btDeletePicture.TabIndex = 6;
 			btDeletePicture.Text = "削除";
-			btDeletePicture.UseVisualStyleBackColor = true;
+			btDeletePicture.UseVisualStyleBackColor = false;
 			btDeletePicture.Click += btDeletePicture_Click;
 			// 
 			// btAddRecord
@@ -379,20 +381,20 @@
 			// 色設定ToolStripMenuItem
 			// 
 			色設定ToolStripMenuItem.Name = "色設定ToolStripMenuItem";
-			色設定ToolStripMenuItem.Size = new Size(180, 22);
+			色設定ToolStripMenuItem.Size = new Size(155, 22);
 			色設定ToolStripMenuItem.Text = "色設定...";
 			色設定ToolStripMenuItem.Click += 色設定ToolStripMenuItem_Click;
 			// 
 			// toolStripSeparator2
 			// 
 			toolStripSeparator2.Name = "toolStripSeparator2";
-			toolStripSeparator2.Size = new Size(177, 6);
+			toolStripSeparator2.Size = new Size(152, 6);
 			// 
 			// 終了ToolStripMenuItem
 			// 
 			終了ToolStripMenuItem.Name = "終了ToolStripMenuItem";
 			終了ToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.F4;
-			終了ToolStripMenuItem.Size = new Size(180, 22);
+			終了ToolStripMenuItem.Size = new Size(155, 22);
 			終了ToolStripMenuItem.Text = "終了(&X)";
 			終了ToolStripMenuItem.Click += 終了ToolStripMenuItem_Click;
 			// 

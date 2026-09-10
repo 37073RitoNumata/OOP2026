@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using System.Xml;
 using System.Xml.Serialization;
 
 namespace CarReportSystem;
@@ -12,18 +7,12 @@ public class Settings
 
 	private const string FileName = "settings.xml";
 
-	//唯一のSettingsオブジェクト
-	private static readonly Settings _instance = new Settings();
-
 	//メイン画面に設定した色情報
 	public int MainFormBackColor { get; set; }
 		= SystemColors.Control.ToArgb();
 
 	//唯一のオブジェクトを取得する
-	public static Settings Instance
-	{
-		get;
-	} = new();
+	public static Settings Instance { get; } = new();
 
 	//外部からnewできないようにする
 	private Settings() { }
@@ -52,7 +41,7 @@ public class Settings
 		};
 
 		//設定ファイルへ色情報を保存する処理（シリアル化）
-		//P284以降を参考にする（ファイル名：setting.xml)
+		//P284以降を参考にする（ファイル名：settings.xml)
 		using var writer = XmlWriter.Create(FileName);
 		var serializer = new XmlSerializer(typeof(SettingsData));
 		serializer.Serialize(writer, data);

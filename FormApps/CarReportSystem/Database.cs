@@ -1,9 +1,4 @@
 ﻿using Microsoft.Data.Sqlite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarReportSystem;
 
@@ -38,7 +33,7 @@ public static class Database
 		//SQLを実行するためのコマンドオブジェクトを作る
 		using var command = connection.CreateCommand();
 
-		//Productsテーブルを作るSQL
+		//CarReportsテーブルを作るSQL
 		//IF NOT EXISTSにより、すでにテーブルがあってもエラーにならない
 		command.CommandText =
 			"""

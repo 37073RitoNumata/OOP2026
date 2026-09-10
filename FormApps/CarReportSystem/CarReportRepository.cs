@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
-using System.Drawing.Imaging;  
-using static CarReportSystem.CarReport; 
+using System.Drawing.Imaging;
+using static CarReportSystem.CarReport;
 
 namespace CarReportSystem;
 
@@ -74,13 +74,20 @@ internal class CarReportRepository
 		command.Parameters.AddWithValue("$maker", carReport.Maker);
 		command.Parameters.AddWithValue("$carName", carReport.CarName);
 		command.Parameters.AddWithValue("$report", carReport.Report);
-		command.Parameters.AddWithValue("$picture", ImageToBytes(carReport.Picture));
+		if (ImageToBytes(carReport.Picture) is not null)
+		{
+			command.Parameters.AddWithValue("$picture", ImageToBytes(carReport.Picture));
+		}
+		else
+		{
+			command.Parameters.AddWithValue("$picture", DBNull.Value);
+		}
 
 		//結果行を返さないSQLを実行する
 		var result = command.ExecuteScalar();
 
 		if (result is null)
-			throw new InvalidOperationException("登録したカーレポートのIDを取得できませんでした。");
+			throw new InvalidOperationException("追加したレポートのIDを取得できませんでした。");
 
 		//SQLiteのINTEGERはlongとして返るため、intに変換する
 		return Convert.ToInt32((long)result);
@@ -115,12 +122,41 @@ internal class CarReportRepository
 		command.Parameters.AddWithValue("$maker", carReport.Maker);
 		command.Parameters.AddWithValue("$carName", carReport.CarName);
 		command.Parameters.AddWithValue("$report", carReport.Report);
-		command.Parameters.AddWithValue("$picture", ImageToBytes(carReport.Picture));
+		if (ImageToBytes(carReport.Picture) is not null)
+		{
+			command.Parameters.AddWithValue("$picture", ImageToBytes(carReport.Picture));
+		}
+		else
+		{
+			command.Parameters.AddWithValue("$picture", DBNull.Value);
+		}
 		command.Parameters.AddWithValue("$id", carReport.Id);
 
 		//更新件数が0なら対象が存在しない
 		if (command.ExecuteNonQuery() == 0)
 			throw new InvalidOperationException("修正対象のカーレポートが見つかりませんでした。");
+	}
+
+	private static void SetCommandParameters(CarReport carReport, SqliteCommand command)
+	{
+		command.Parameters.AddWithValue("$date", carReport.Date);
+		command.Parameters.AddWithValue("$author", carReport.Author);
+		command.Parameters.AddWithValue("$maker", carReport.Maker);
+		command.Parameters.AddWithValue("$carName", carReport.CarName);
+		command.Parameters.AddWithValue("$report", carReport.Report);
+
+		byte[]? pictureData = ImageToBytes(carReport.Picture);
+
+		var pictureParameter = command.Parameters.Add("$picture", SqliteType.Blob);
+
+		if (pictureData is not null)
+		{
+			pictureParameter.Value = pictureData;
+		}
+		else
+		{
+			pictureParameter.Value = DBNull.Value;
+		}
 	}
 
 	public void Delete(int id)
