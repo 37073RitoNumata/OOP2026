@@ -22,8 +22,8 @@ public class Settings
 	//唯一のオブジェクトを取得する
 	public static Settings Instance
 	{
-		get { return _instance; }
-	}
+		get;
+	} = new();
 
 	//外部からnewできないようにする
 	private Settings() { }

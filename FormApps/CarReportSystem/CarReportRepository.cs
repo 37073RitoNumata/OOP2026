@@ -1,9 +1,6 @@
-﻿using CarReportSystem;
-using Microsoft.Data.Sqlite;
-using System.Diagnostics;
-using System.Drawing.Imaging;
-using System.Xml.Linq;
-using static CarReportSystem.CarReport;
+﻿using Microsoft.Data.Sqlite;
+using System.Drawing.Imaging;  
+using static CarReportSystem.CarReport; 
 
 namespace CarReportSystem;
 
@@ -39,6 +36,7 @@ internal class CarReportRepository
 			{
 				Id = reader.GetInt32(0),
 				Date = reader.GetDateTime(1),
+				//Date = DateTime.ParseExact(reader.GetString(1), "yyyy-MM-dd", CultureInfo.InvariantCulture),
 				Author = reader.GetString(2),
 				Maker = (MakerGroup)reader.GetInt32(3),
 				CarName = reader.GetString(4),
@@ -76,7 +74,7 @@ internal class CarReportRepository
 		command.Parameters.AddWithValue("$maker", carReport.Maker);
 		command.Parameters.AddWithValue("$carName", carReport.CarName);
 		command.Parameters.AddWithValue("$report", carReport.Report);
-		command.Parameters.AddWithValue("$picture", carReport.Picture);
+		command.Parameters.AddWithValue("$picture", ImageToBytes(carReport.Picture));
 
 		//結果行を返さないSQLを実行する
 		var result = command.ExecuteScalar();
@@ -146,6 +144,15 @@ internal class CarReportRepository
 		command.ExecuteNonQuery();
 	}
 
+	// SQLiteのBLOB（byte[]）をImageへ変換する
+	private static Image BytesToImage(byte[] data)
+	{
+		using var stream = new MemoryStream(data);
+		using var image = Image.FromStream(stream);
+		// MemoryStream破棄後も利用できるようBitmapとしてコピーする。
+		return new Bitmap(image);
+	}
+
 	// ImageをSQLiteへ保存できるbyte[]へ変換する
 	private static byte[]? ImageToBytes(Image? image)
 	{
@@ -157,13 +164,5 @@ internal class CarReportRepository
 		return stream.ToArray();
 	}
 
-	// SQLiteのBLOB（byte[]）をImageへ変換する
-	private static Image BytesToImage(byte[] data)
-	{
-		using var stream = new MemoryStream(data);
-		using var image = Image.FromStream(stream);
-		// MemoryStream破棄後も利用できるようBitmapとしてコピーする。
-		return new Bitmap(image);
-	}
 }
 

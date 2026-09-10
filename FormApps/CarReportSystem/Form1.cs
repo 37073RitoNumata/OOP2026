@@ -1,21 +1,12 @@
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml;
-using System.Xml.Linq;
-using System.Xml.Serialization;
 using static CarReportSystem.CarReport;
 
 namespace CarReportSystem
 {
 	public partial class Form1 : Form
 	{
-
 		//カーレポート管理用リスト
 		BindingList<CarReport> listCarReports = new BindingList<CarReport>();
-
-		//設定クラスのオブジェクトを生成
-		//Settings settings = Settings.Instance;
 
 		private readonly CarReportRepository _repository = new();
 
@@ -29,7 +20,7 @@ namespace CarReportSystem
 			//DataGridViewのデータ元としてBindingListを設定する
 			dgvRecords.DataSource = listCarReports;
 
-			//起動直後にDBから商品一覧を読み込む
+			//起動直後にDBからレポート一覧を読み込む
 			ReloadCarReports();
 
 			//使用中のDBファイルの場所をステータスバーに表示する
@@ -178,6 +169,7 @@ namespace CarReportSystem
 					Picture = pbPicture.Image,
 				};
 
+
 				_repository.Add(carReport);
 
 				ReloadCarReports();
@@ -190,12 +182,10 @@ namespace CarReportSystem
 				ShowError("登録エラー", ex);
 			}
 
-
 			//入力履歴の保持
 			SetCbAuthor(cbAuthor.Text.Trim());
 			SetCbCarName(cbCarName.Text.Trim());
 
-			dgvRecords.ClearSelection(); //セルの選択を解除
 			InputItemsUpdate(); //データグリッドビューを更新したら呼ぶメソッド
 		}
 
@@ -248,6 +238,7 @@ namespace CarReportSystem
 			{
 				ShowError("修正エラー", ex);
 			}
+			InputItemsUpdate(); //データグリッドビューを更新したら呼ぶメソッド
 		}
 
 		//削除ボタンイベントハンドラ
@@ -318,7 +309,6 @@ namespace CarReportSystem
 			InputItemsUpdate();//データグリッドビューを更新したら呼ぶメソッド
 		}
 
-		//
 		private void 終了ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Application.Exit();
@@ -339,80 +329,6 @@ namespace CarReportSystem
 		{
 
 			Settings.Instance.Save();
-		}
-
-		private void 保存ToolStripMenuItem_Click_1(object sender, EventArgs e)
-		{
-			reportSaveFile();
-		}
-
-		private void 開くToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			reportOpenFile();
-		}
-
-		//ファイルセーブ処理
-		private void reportSaveFile()
-		{
-			if (sfdReportFileSave.ShowDialog() == DialogResult.OK)
-			{
-				try
-				{
-					//バイナリ形式でシリアル化
-#pragma warning disable SYSLIB0011
-					var bf = new BinaryFormatter();
-#pragma warning restore SYSLIB0011
-					using (FileStream fs = File.Open(sfdReportFileSave.FileName, FileMode.Create))
-					{
-						bf.Serialize(fs, listCarReports);
-					}
-				}
-
-				catch (Exception ex)
-				{
-					tsslbMessage.Text = "ファイル書き出しエラー";
-					MessageBox.Show(ex.Message);
-				}
-			}
-		}
-
-		//ファイルオープン処理
-		private void reportOpenFile()
-		{
-			if (ofdReportFileOpen.ShowDialog() == DialogResult.OK)
-			{
-				try
-				{
-					//逆シリアル化でバイナリ形式を取り込む
-#pragma warning disable SYSLIB0011
-					var bf = new BinaryFormatter();
-#pragma warning restore SYSLIB0011
-					using (FileStream fs = File.Open(ofdReportFileOpen.FileName, //ファイル名
-						FileMode.Open, //ファイルモード
-						FileAccess.Read //アクセス
-						))
-					{
-
-						listCarReports = (BindingList<CarReport>)bf.Deserialize(fs);
-						dgvRecords.DataSource = listCarReports;
-					}
-					//コンボボックスの履歴をすべて消す
-					cbAuthor.Items.Clear();
-					cbCarName.Items.Clear();
-
-					//コンボボックスの履歴を再登録
-					foreach (var report in listCarReports)
-					{
-						SetCbAuthor(report.Author);
-						SetCbCarName(report.CarName);
-					}
-				}
-				catch (Exception ex)
-				{
-					tsslbMessage.Text = "ファイル読み出しエラー";
-					MessageBox.Show(ex.Message);
-				}
-			}
 		}
 
 		private void ShowError(string title, Exception ex)
