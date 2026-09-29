@@ -41,6 +41,8 @@ namespace CarReportSystem
 				tsslbMessage.Text = "設定ファイル読み込みエラー";
 				MessageBox.Show(ex.Message);//←より具体的なエラーを出力         
 			}
+
+			
 		}
 
 		private MakerGroup GetRadioButtonMaker()
@@ -229,15 +231,16 @@ namespace CarReportSystem
 				ReloadCarReports();
 				ClearInput();
 
-				SetCbAuthor(cbAuthor.Text.Trim());
-				SetCbCarName(cbCarName.Text.Trim());
-
 				tsslbMessage.Text = "レポートを修正しました。";
 			}
 			catch (Exception ex)
 			{
 				ShowError("修正エラー", ex);
 			}
+
+			SetCbAuthor(cbAuthor.Text.Trim());
+			SetCbCarName(cbCarName.Text.Trim());
+
 			InputItemsUpdate(); //データグリッドビューを更新したら呼ぶメソッド
 		}
 
@@ -286,6 +289,15 @@ namespace CarReportSystem
 				listCarReports.Add(carReport);
 			}
 			dgvRecords.ClearSelection(); //セルの選択を解除
+
+			// コンボボックスの履歴
+			cbAuthor.Items.Clear();
+			cbCarName.Items.Clear();
+			foreach (var carReport in listCarReports)
+			{
+				SetCbAuthor(carReport.Author);
+				SetCbCarName(carReport.CarName);
+			}
 		}
 
 		private void ClearInput()

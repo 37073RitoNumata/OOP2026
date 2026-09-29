@@ -74,6 +74,7 @@ internal class CarReportRepository
 		command.Parameters.AddWithValue("$maker", carReport.Maker);
 		command.Parameters.AddWithValue("$carName", carReport.CarName);
 		command.Parameters.AddWithValue("$report", carReport.Report);
+
 		if (ImageToBytes(carReport.Picture) is not null)
 		{
 			command.Parameters.AddWithValue("$picture", ImageToBytes(carReport.Picture));
@@ -195,7 +196,7 @@ internal class CarReportRepository
 		if (image is null) return null;
 
 		using var stream = new MemoryStream();
-		// DBへはPNG形式で保存
+		// DBへPNG形式で保存
 		image.Save(stream, ImageFormat.Png);
 		return stream.ToArray();
 	}
