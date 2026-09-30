@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MvcBasicSample.Models;
 
 namespace MvcBasicSample.Controllers;
 
@@ -8,9 +9,21 @@ public class HelloController : Controller
 	// ../Hello/Indexで呼び出されるアクションメソッド
 	public IActionResult Index()
 	{
-		//Viewを使用せず、文字列をHTTPのレスポンスとして返す
-		//return Content("初めてのASP.NET Core");
-		return View();
+		var product = new List<Product>
+		{
+			new Product
+			{
+				Name = "りんご",
+				Price = 100
+			},
+			new Product
+			{
+				Name = "みかん",
+				Price = 80
+			}
+		};
+
+		return View(product); //Viewに商品オブジェクトを渡す
 	}
 }
 
