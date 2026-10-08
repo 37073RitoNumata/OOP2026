@@ -20,6 +20,41 @@ public class HelloController : Controller
 			{
 				Name = "みかん",
 				Price = 80
+			},
+			new Product
+			{
+				Name = "ぶどう",
+				Price = 150
+			},
+						new Product
+			{
+				Name = "りんご",
+				Price = 100
+			},
+			new Product
+			{
+				Name = "みかん",
+				Price = 80
+			},
+			new Product
+			{
+				Name = "ぶどう",
+				Price = 150
+			},
+						new Product
+			{
+				Name = "りんご",
+				Price = 100
+			},
+			new Product
+			{
+				Name = "みかん",
+				Price = 80
+			},
+			new Product
+			{
+				Name = "ぶどう",
+				Price = 150
 			}
 		};
 
