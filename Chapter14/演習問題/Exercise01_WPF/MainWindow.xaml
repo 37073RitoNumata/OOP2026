@@ -8,6 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <StackPanel Orientation="Vertical">
         <Button Content="ファイル選択" Click="Button_Click"/>
-        <TextBox x:Name="TextArea" TextWrapping="Wrap" Height="400"/>
+        <TextBox x:Name="TextArea" TextWrapping="Wrap" Height="400"
+         VerticalScrollBarVisibility="Auto"/>
     </StackPanel>
 </Window>
