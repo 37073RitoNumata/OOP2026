@@ -18,10 +18,10 @@ public class WordCounterProcessor : TextProcessor
 	'"', '\'',                      // 文字列・文字リテラル
 	'@', '$', '#'                   // @"..." $"..." #region など
 };
-	protected override void Initialize(string fName) =>
+	protected virtual void Initialize(string fName) =>
 		_count = 0;
-	protected override void Execute(string line) =>
+	protected virtual void Execute(string line) =>
 		_count += line.Split(_separators, StringSplitOptions.RemoveEmptyEntries).Count(w => w == word);
-	protected override void Terminate() =>
+	protected virtual void Terminate() =>
 		Console.WriteLine($"{word}は{_count}回出現します。 ");
 }
