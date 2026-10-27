@@ -13,7 +13,9 @@ public class ConverterFactory
 		new MeterConverter(),
 		new FeetConverter(),
 		new InchConverter(),
-		new YardConverter()
+		new YardConverter(),
+		new KilometerConverter(),
+		new MileConverter()
 	};
 
 	public static ConverterBase? GetInstance(string name) =>
