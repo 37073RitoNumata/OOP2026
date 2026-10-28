@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace DistanceConverter;
 
-namespace DistanceConverter;
 public class MeterConverter : ConverterBase
 {
 	public override bool IsMyUnit(string name) =>
-		name.ToLower() == "meter" || name == UnitName;
+		string.Equals(name, "meter", StringComparison.OrdinalIgnoreCase) || name == UnitName;
 
 	protected override double Ratio => 1;
 	public override string UnitName => "メートル";
@@ -17,7 +12,7 @@ public class MeterConverter : ConverterBase
 public class FeetConverter : ConverterBase
 {
 	public override bool IsMyUnit(string name) =>
-		name.ToLower() == "feet" || name == UnitName;
+		string.Equals(name, "feet", StringComparison.OrdinalIgnoreCase) || name == UnitName;
 
 	protected override double Ratio => 0.3048;
 	public override string UnitName => "フィート";
@@ -26,7 +21,7 @@ public class FeetConverter : ConverterBase
 public class InchConverter : ConverterBase
 {
 	public override bool IsMyUnit(string name) =>
-		name.ToLower() == "inch" || name == UnitName;
+		string.Equals(name, "inch", StringComparison.OrdinalIgnoreCase) || name == UnitName;
 
 	protected override double Ratio => 0.0254;
 	public override string UnitName => "インチ";
@@ -35,7 +30,7 @@ public class InchConverter : ConverterBase
 public class YardConverter : ConverterBase
 {
 	public override bool IsMyUnit(string name) =>
-		name.ToLower() == "yard" || name == UnitName;
+		string.Equals(name, "yard", StringComparison.OrdinalIgnoreCase) || name == UnitName;
 
 	protected override double Ratio => 0.9144;
 	public override string UnitName => "ヤード";
@@ -44,7 +39,8 @@ public class YardConverter : ConverterBase
 public class KilometerConverter : ConverterBase
 {
 	public override bool IsMyUnit(string name) =>
-		name.ToLower() == "kilometer" || name == UnitName;
+		string.Equals(name, "kilometer", StringComparison.OrdinalIgnoreCase) || name == UnitName;
+
 	protected override double Ratio => 1000;
 	public override string UnitName => "キロメートル";
 }
@@ -52,7 +48,8 @@ public class KilometerConverter : ConverterBase
 public class MileConverter : ConverterBase
 {
 	public override bool IsMyUnit(string name) =>
-		name.ToLower() == "mile" || name == UnitName;
-	protected override double Ratio => 1609.34;
+		string.Equals(name, "mile", StringComparison.OrdinalIgnoreCase) || name == UnitName;
+
+	protected override double Ratio => 1609.344;   //国際マイル（正確な値）
 	public override string UnitName => "マイル";
 }

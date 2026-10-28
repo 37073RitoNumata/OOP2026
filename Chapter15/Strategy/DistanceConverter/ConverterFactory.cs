@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace DistanceConverter;
 
-namespace DistanceConverter;
-public class ConverterFactory
+public static class ConverterFactory
 {
-	//あらかじめ、すべてのコンバーターを生成し、配列に格納しておく
-	private readonly static ConverterBase[] _converters = new ConverterBase[]
-	{
+	//あらかじめインスタンスを生成し、配列に入れておく
+	private readonly static ConverterBase[] _converters =
+	[
 		new MeterConverter(),
 		new FeetConverter(),
 		new InchConverter(),
 		new YardConverter(),
 		new KilometerConverter(),
-		new MileConverter()
-	};
+		new MileConverter(),
+	];
+
+	//対応している単位名の一覧（エラーメッセージ用）
+	public static IEnumerable<string> UnitNames =>
+		_converters.Select(x => x.UnitName);
 
 	public static ConverterBase? GetInstance(string name) =>
 		_converters.FirstOrDefault(x => x.IsMyUnit(name));

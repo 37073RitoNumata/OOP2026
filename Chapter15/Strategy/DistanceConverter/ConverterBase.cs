@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace DistanceConverter;
 
-namespace DistanceConverter;
 //基底クラス
 public abstract class ConverterBase
 {
@@ -20,7 +15,6 @@ public abstract class ConverterBase
 	//メートルからの変換
 	public double FromMeter(double meter) => meter / Ratio;
 
-
 	//メートルへの変換
-	public double ToMeter(double feet) => feet * Ratio;
+	public double ToMeter(double value) => value * Ratio;
 }
