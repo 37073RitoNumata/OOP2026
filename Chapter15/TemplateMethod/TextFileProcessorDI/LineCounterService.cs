@@ -2,20 +2,12 @@
 
 public class LineCounterService : ITextFileService
 {
-	private int _lineCount;
+	private int _count;
 
-	public void Initialize(string fName)
-	{
-		_lineCount = 0;
-	}
+	public void Initialize(string fName) => _count = 0;
 
-	public void Execute(string line)
-	{
-		_lineCount++;
-	}
 
-	public void Terminate()
-	{
-		Console.WriteLine($"Total lines: {_lineCount}");
-	}
+	public void Execute(string line) => _count++;
+
+	public void Terminate() => Console.WriteLine($"Total lines: {_count}");
 }

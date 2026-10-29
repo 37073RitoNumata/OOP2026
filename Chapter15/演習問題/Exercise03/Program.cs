@@ -1,2 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using Exercise03;
+
+var service = new Take20Processor();
+var processor = new TextFileProcessor(service);
+
+processor.Run("枕草子.txt");
