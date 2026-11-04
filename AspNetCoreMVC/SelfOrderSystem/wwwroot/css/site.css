@@ -20,3 +20,528 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* AIデザイン演習用の追加スタイル */
+:root {
+    /* 授業で決めた2色はそのまま使う */
+    --brand-color: #395c47; /* 深緑：見出し・ボタン */
+    --brand-dark: #2b4535; /* 深緑（ホバー・押したとき） */
+    --brand-tint: #e3ebe5; /* 深緑のごく薄い色：注文状況の背景 */
+    --page-bg: #f7f6f1; /* 生成り：ページ背景 */
+
+    --ink: #1f2a24; /* 本文の文字色 */
+    --ink-muted: #5d6a62; /* 説明文・補足 */
+    --line: #dedcd2; /* 枠線 */
+    --line-strong: #bdbaab; /* 伝票の点線 */
+    --surface: #ffffff; /* カードの面 */
+    --mustard: #f0b73e; /* からし色：カートへ進むボタンだけに使う */
+    --mustard-dark: #dda327;
+    --soldout-bg: #efeee8; /* 売り切れカード */
+    --soldout-ink: #7d837e;
+    --danger: #b03a2e; /* エラー・削除 */
+    --danger-tint: #fbece9;
+    --radius-card: 16px; /* 商品カード・完了画面 */
+    --radius-bar: 18px; /* 画面下のカートバー */
+    --radius-ctrl: 10px; /* ボタン・入力欄 */
+
+    --font-ui: "BIZ UDPGothic", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Meiryo", sans-serif;
+}
+
+/* ---------- ベース ---------- */
+html {
+    position: relative;
+    min-height: 100%;
+    font-size: 15px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    margin-bottom: 60px; /* フッターの高さ分 */
+    font-family: var(--font-ui);
+    line-height: 1.7;
+    color: var(--ink);
+    background: var(--page-bg);
+    -webkit-font-smoothing: antialiased;
+}
+
+main {
+    padding-top: .5rem;
+}
+
+h1, h2 {
+    color: var(--brand-color);
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+main > h1 {
+    margin-bottom: 1.25rem !important;
+    letter-spacing: .04em;
+}
+
+.text-muted {
+    color: var(--ink-muted) !important;
+}
+
+.text-danger {
+    color: var(--danger) !important;
+}
+
+/* キーボード操作時のフォーカス枠を深緑に */
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 .15rem #fff, 0 0 0 .35rem var(--brand-color);
+}
+
+/* メニュー以外（カート・注文確認・完了・状況）は読みやすい幅にまとめる */
+main:not(:has(> .row)) {
+    max-width: 44rem;
+    margin-inline: auto;
+}
+
+/* ---------- ヘッダー・フッター ---------- */
+header .navbar.border-bottom {
+    border-bottom: 1px solid var(--line) !important;
+}
+
+header .navbar.box-shadow {
+    box-shadow: none;
+}
+
+header .navbar .navbar-brand {
+    font-weight: 700;
+    letter-spacing: .02em;
+    color: var(--brand-color);
+}
+
+header .navbar .nav-link.text-dark {
+    color: var(--ink-muted) !important;
+}
+
+    header .navbar .nav-link.text-dark:hover {
+        color: var(--brand-color) !important;
+    }
+
+footer.footer {
+    font-size: .875rem;
+}
+
+    footer.footer a {
+        color: var(--brand-color);
+    }
+
+/* ---------- ボタン共通 ---------- */
+.btn {
+    padding: .6rem 1.1rem;
+    font-weight: 700;
+    border-radius: var(--radius-ctrl);
+    transition: background-color .15s, border-color .15s, color .15s;
+}
+
+    .btn:active {
+        transform: translateY(1px); /* 押した感触 */
+    }
+
+.btn-lg {
+    padding: .9rem 1.5rem;
+    font-size: 1.15rem;
+    border-radius: 12px;
+}
+
+/* 主な操作（カートに追加・注文内容を確認する・注文を確定する など） */
+.btn-primary,
+.btn-success {
+    color: #fff;
+    background-color: var(--brand-color);
+    border-color: var(--brand-color);
+}
+
+    .btn-primary:hover, .btn-primary:focus, .btn-primary:active,
+    .btn-success:hover, .btn-success:focus, .btn-success:active {
+        color: #fff;
+        background-color: var(--brand-dark);
+        border-color: var(--brand-dark);
+    }
+
+/* 売り切れボタン（disabled） */
+.btn-secondary:disabled,
+.btn-secondary.disabled {
+    color: var(--soldout-ink);
+    background-color: #e4e3dc;
+    border-color: #e4e3dc;
+    opacity: 1;
+}
+
+/* 数量の「変更」 */
+.btn-outline-primary {
+    color: var(--brand-color);
+    background-color: var(--surface);
+    border-color: var(--brand-color);
+}
+
+    .btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active {
+        color: #fff;
+        background-color: var(--brand-color);
+        border-color: var(--brand-color);
+    }
+
+/* 「削除」 */
+.btn-outline-danger {
+    color: var(--danger);
+    background-color: var(--surface);
+    border-color: #e6c4be;
+}
+
+    .btn-outline-danger:hover, .btn-outline-danger:focus, .btn-outline-danger:active {
+        color: #fff;
+        background-color: var(--danger);
+        border-color: var(--danger);
+    }
+
+/* 「カートに戻る」 */
+.btn-outline-secondary {
+    color: var(--ink-muted);
+    background-color: var(--surface);
+    border-color: var(--line);
+}
+
+    .btn-outline-secondary:hover, .btn-outline-secondary:focus, .btn-outline-secondary:active {
+        color: var(--ink);
+        background-color: var(--soldout-bg);
+        border-color: var(--line-strong);
+    }
+
+/* ---------- メニュー画面：カテゴリ切り替え ---------- */
+main > .d-flex.overflow-auto {
+    scrollbar-width: thin;
+}
+
+.btn-dark,
+.btn-outline-dark {
+    padding: .5rem 1.3rem;
+    white-space: nowrap;
+    border-radius: 999px;
+}
+
+.btn-outline-dark {
+    color: var(--ink);
+    background-color: var(--surface);
+    border-color: var(--line);
+}
+
+    .btn-outline-dark:hover, .btn-outline-dark:focus, .btn-outline-dark:active {
+        color: var(--brand-color);
+        background-color: var(--surface);
+        border-color: var(--brand-color);
+    }
+
+.btn-dark,
+.btn-dark:hover, .btn-dark:focus, .btn-dark:active {
+    color: #fff;
+    background-color: var(--brand-color);
+    border-color: var(--brand-color);
+}
+
+/* ---------- メニュー画面：商品カード ---------- */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+}
+
+    .card.shadow-sm {
+        box-shadow: none !important;
+    }
+
+/* 商品名・説明は上に、価格とボタンは下の1行に並べる */
+.row .card-body {
+    display: grid !important;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr auto;
+    column-gap: 1rem;
+    align-items: center;
+    padding: 1.25rem 1.25rem 1.1rem;
+}
+
+    .row .card-body > h2,
+    .row .card-body > .text-muted {
+        grid-column: 1 / -1;
+    }
+
+    .row .card-body > h2 {
+        margin-bottom: .35rem;
+        font-size: 1.25rem;
+    }
+
+    .row .card-body > .text-muted {
+        align-self: start;
+        margin-bottom: 1rem;
+        font-size: .92rem;
+    }
+
+    /* 価格 */
+    .row .card-body > .fs-5 {
+        margin: 0;
+        font-size: 1.45rem !important;
+        letter-spacing: .01em;
+        font-variant-numeric: tabular-nums;
+        color: var(--ink);
+    }
+
+    .row .card-body > form .btn {
+        padding: .7rem 1.25rem;
+    }
+
+/* 売り切れの商品はカードごと控えめに */
+.card:has(button:disabled) {
+    background: var(--soldout-bg);
+    border-color: var(--soldout-bg);
+}
+
+    .card:has(button:disabled) h2,
+    .card:has(button:disabled) .fs-5,
+    .card:has(button:disabled) .text-muted {
+        color: var(--soldout-ink) !important;
+    }
+
+/* ---------- メニュー画面：カートバー（画面下に固定） ---------- */
+main > .alert-dark.d-flex {
+    position: sticky;
+    bottom: 1rem;
+    z-index: 10;
+    gap: 1rem;
+    margin-top: 1.75rem !important;
+    padding: .7rem .7rem .7rem 1.5rem;
+    color: #fff;
+    background: var(--brand-color);
+    border: 0;
+    border-radius: var(--radius-bar);
+    box-shadow: 0 16px 32px -14px rgba(31, 42, 36, .6);
+}
+
+    main > .alert-dark.d-flex > span {
+        font-size: 1.3rem;
+        font-weight: 700;
+        letter-spacing: .02em;
+        font-variant-numeric: tabular-nums;
+    }
+
+    main > .alert-dark.d-flex .btn-light {
+        padding: .8rem 1.6rem;
+        font-size: 1.05rem;
+        color: var(--ink);
+        background-color: var(--mustard);
+        border-color: var(--mustard);
+        border-radius: 12px;
+    }
+
+        main > .alert-dark.d-flex .btn-light:hover,
+        main > .alert-dark.d-flex .btn-light:focus,
+        main > .alert-dark.d-flex .btn-light:active {
+            color: var(--ink);
+            background-color: var(--mustard-dark);
+            border-color: var(--mustard-dark);
+        }
+
+        main > .alert-dark.d-flex .btn-light:focus {
+            box-shadow: 0 0 0 .15rem var(--brand-color), 0 0 0 .35rem #fff;
+        }
+
+/* ---------- メッセージ ---------- */
+.alert {
+    border-radius: 12px;
+}
+
+.alert-danger {
+    color: var(--danger);
+    background: var(--danger-tint);
+    border-color: #f0cfc9;
+}
+
+/* カートが空のとき */
+.alert-info {
+    padding: 2.5rem 1rem;
+    text-align: center;
+    color: var(--ink-muted);
+    background: var(--surface);
+    border: 1px dashed var(--line-strong);
+}
+
+main > .alert-info + .btn {
+    display: block;
+}
+
+/* ---------- カート画面 ---------- */
+main > .card.mb-2 {
+    margin-bottom: .75rem !important;
+    border-radius: 14px;
+}
+
+    main > .card.mb-2 .card-body {
+        padding: 1rem 1.25rem;
+    }
+
+    main > .card.mb-2 strong {
+        font-size: 1.1rem;
+        font-variant-numeric: tabular-nums;
+    }
+
+    main > .card.mb-2 .form-control {
+        flex: 0 0 auto;
+        width: 5.5rem;
+        text-align: center;
+    }
+
+    /* 「変更」と「削除」のボタンの高さをそろえる */
+    main > .card.mb-2 .d-flex.gap-2.mt-2 > form {
+        display: flex;
+    }
+
+/* ---------- 注文確認・注文状況：明細の行を伝票風に ---------- */
+main > .d-flex.justify-content-between.border-bottom {
+    padding: .85rem .25rem !important;
+    font-size: 1.05rem;
+    border-bottom: 1px dashed var(--line-strong) !important;
+}
+
+    main > .d-flex.justify-content-between.border-bottom > span:last-child {
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+    }
+
+    /* 合計の直前の行は点線を消して二重線だけにする */
+    main > .d-flex.justify-content-between.border-bottom:has(+ .text-end) {
+        border-bottom: 0 !important;
+    }
+
+/* 合計金額 */
+main > .text-end.fs-4.fw-bold {
+    margin-top: .25rem !important;
+    margin-bottom: 1.5rem !important;
+    padding-top: .75rem;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    border-top: 3px double var(--ink);
+}
+
+/* ---------- フォーム ---------- */
+.form-label {
+    font-weight: 700;
+}
+
+.form-control {
+    padding: .65rem .9rem;
+    font-size: 1.1rem;
+    background-color: var(--surface);
+    border-color: #cfccc0;
+    border-radius: var(--radius-ctrl);
+}
+
+    .form-control:focus {
+        border-color: var(--brand-color);
+    }
+
+.input-validation-error {
+    border-color: var(--danger);
+}
+
+.field-validation-error {
+    display: block;
+    margin-top: .35rem;
+    font-size: .9rem;
+}
+
+/* 注文確認画面のエラー一覧（売り切れ・価格変更など） */
+.validation-summary-errors {
+    margin-bottom: 1rem;
+    padding: .9rem 1.25rem;
+    background: var(--danger-tint);
+    border-radius: 12px;
+}
+
+    .validation-summary-errors ul {
+        margin: 0;
+        padding-left: 1.1rem;
+    }
+
+/* ---------- 注文完了：整理券のように注文番号を大きく ---------- */
+main > .text-center.py-4 {
+    max-width: 26rem;
+    margin: 1.5rem auto 0;
+    padding: 2.25rem 1.75rem !important;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+}
+
+    main > .text-center.py-4 > h1 {
+        font-size: 1.3rem;
+        text-wrap: balance;
+    }
+
+    main > .text-center.py-4 > .display-6 {
+        margin: 1.25rem 0 .25rem;
+        font-size: 2.4rem;
+        font-weight: 700;
+        line-height: 1.2;
+        color: var(--brand-color);
+        font-variant-numeric: tabular-nums;
+    }
+
+    /* テーブル番号の下にミシン目 */
+    main > .text-center.py-4 > p:not(.display-6) {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        color: var(--ink-muted);
+        border-bottom: 2px dashed var(--line);
+    }
+
+    main > .text-center.py-4 > .btn {
+        display: block;
+    }
+
+/* ---------- 注文状況 ---------- */
+main > .alert-dark:not(.d-flex) {
+    margin: 1rem 0 1.5rem;
+    padding: 1.25rem 1.5rem;
+    color: var(--brand-color);
+    letter-spacing: .04em;
+    background: var(--brand-tint);
+    border: 0;
+    border-radius: 14px;
+}
+
+/* ---------- スマホ ---------- */
+@media (max-width: 575.98px) {
+    main > .alert-dark.d-flex {
+        bottom: .75rem;
+        padding-left: 1.1rem;
+    }
+
+        main > .alert-dark.d-flex > span {
+            font-size: 1.1rem;
+        }
+
+        main > .alert-dark.d-flex .btn-light {
+            padding: .7rem 1.1rem;
+        }
+}
+
+/* ---------- 動きを減らす設定の人向け ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .btn {
+        transition: none;
+    }
+
+        .btn:active {
+            transform: none;
+        }
+}
+ 
