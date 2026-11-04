@@ -19,9 +19,13 @@ public class TextFileProcessor
 	{
 		_service.Initialize(fileName);
 		var lines = File.ReadLines(fileName);
+
 		foreach (var line in lines)
 		{
-			_service.Execute(line);
+			if (!_service.Execute(line))
+			{
+				break; // Execute が false を返したらループを終了
+			}
 		}
 		_service.Terminate();
 	}

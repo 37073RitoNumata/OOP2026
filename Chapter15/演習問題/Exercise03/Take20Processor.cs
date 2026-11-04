@@ -11,13 +11,12 @@ internal class Take20Processor : ITextFileService
 
 	public void Initialize(string fName) => _count = 0;
 
-	public void Execute(string line)
+	public bool Execute(string line)
 	{
-		if (_count < 20)
-		{
-			Console.WriteLine(line);
-			_count++;
-		}
+		Console.WriteLine(line);
+		_count++;
+
+		return _count < 20; // 20行表示したら false を返す
 	}
 
 	public void Terminate() => Console.WriteLine($"（{_count}行を表示しました）");

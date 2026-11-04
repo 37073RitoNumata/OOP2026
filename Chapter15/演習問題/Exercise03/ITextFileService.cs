@@ -9,6 +9,6 @@ namespace Exercise03;
 public interface ITextFileService
 {
 	void Initialize(string fName);
-	void Execute(string line);
+	bool Execute(string line);
 	void Terminate();
 }
