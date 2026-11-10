@@ -1,22 +1,43 @@
 html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
     font-size: 16px;
-  }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+@media (max-width: 991.98px) {
+    /* メニュー画面の「◯点 / ◯円 カートを見る」を、スクロールしても画面の下に表示し続ける */
+    main > .alert-dark.d-flex {
+        position: sticky;
+        bottom: 12px;
+        z-index: 10;
+        box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.25);
+    }
+}
+
+/* ---------- スマホ（768px未満） ---------- */
+@media (max-width: 767.98px) {
+    /* カート画面：数量の入力欄が広がりすぎて「変更」ボタンが縦書きになるのを防ぐ */
+    main > .card input[type="number"].form-control {
+        width: 5rem;
+    }
+
+    /* カート画面：「変更」「削除」ボタンを同じ高さにそろえる */
+    main > .card form {
+        display: flex;
+    }
+
+    main > .card .btn {
+        white-space: nowrap;
+    }
 }
