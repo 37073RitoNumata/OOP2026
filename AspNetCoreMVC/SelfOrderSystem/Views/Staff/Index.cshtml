@@ -1,5 +1,6 @@
 ﻿@using SelfOrderSystem.Models
 @model List<Order>
+
 @{
     ViewData["Title"] = "店舗 注文管理";
 
@@ -10,7 +11,6 @@
     int servedCount = Model.Count(o => o.Status == OrderStatus.Served);
 }
 
-@* この画面だけで使うCSSを読み込む（_Layout.cshtmlのStylesセクションに入る） *@
 @section Styles {
     <link rel="stylesheet" href="~/css/staff.css" asp-append-version="true" />
 }
@@ -56,28 +56,28 @@
     {
         @* 注文をカード形式で並べる *@
         <div class="staff-order-grid">
+
             @foreach (var order in Model)
             {
                 // 注文全体の合計金額
-                var total = order.Items.Sum(i => i.UnitPrice * i.Quantity);
-
-                // 注文状態に合わせたバッジの色
-                var statusClass = order.Status switch
-                {
-                    OrderStatus.Served => "staff-status-served",
-                    OrderStatus.Cooking => "staff-status-cooking",
-                    _ => "staff-status-new"
-                };
+                var total = order.Items.Sum(
+                i => i.UnitPrice * i.Quantity);
 
                 <article class="staff-order-card">
 
                     @* 卓番・注文ID・注文時刻 *@
                     <div class="staff-order-top">
+
                         <div class="staff-order-identity">
-                            <span class="staff-table-number">卓 @order.TableNumber</span>
+                            <span class="staff-table-number">
+                                卓 @order.TableNumber
+                            </span>
 
                             <div>
-                                <div class="staff-order-id">注文 #@order.Id</div>
+                                <div class="staff-order-id">
+                                    注文 #@order.Id
+                                </div>
+
                                 <time class="staff-order-time">
                                     @order.OrderedAtUtc.ToLocalTime().ToString("yyyy/MM/dd HH:mm")
                                 </time>
@@ -85,46 +85,73 @@
                         </div>
 
                         @* 現在の注文状態 *@
-                        <span class="staff-status @statusClass">@order.Status.ToJapanese()</span>
-                    </div>
+                        <span class="staff-status
+                                            @(order.Status == OrderStatus.Served
+                                                                                            ? "staff-status-served"
+                                                                                            : order.Status == OrderStatus.Cooking
+                                                                                                ? "staff-status-cooking"
+                                                                                                : "staff-status-new")">
+                    @order.Status.ToJapanese()
+                </span>
+            </div>
 
                     @* 商品一覧 *@
                     <div class="staff-order-items">
-                        @foreach (var item in order.Items)
+
+                @foreach (var item in order.Items)
                         {
                             <div class="staff-order-item">
-                                <span>@item.Product?.Name</span>
-                                <strong>× @item.Quantity</strong>
+                                <span>
+                                    @item.Product?.Name
+                                </span>
+
+                                <strong>
+                                    × @item.Quantity
+                                </strong>
                             </div>
                         }
+
                     </div>
 
                     @* 合計金額と操作 *@
                     <div class="staff-order-bottom">
+
                         <div class="staff-total">
                             <span>注文合計</span>
-                            <strong>@total.ToString("N0") 円</strong>
+                            <strong>
+                                @total.ToString("N0")
+                            </strong>
                         </div>
 
                         @if (order.Status != OrderStatus.Served)
                         {
                             @* 既存の状態変更処理を呼び出す *@
-                            <form asp-controller="Staff" asp-action="Advance" method="post">
-                                <input type="hidden" name="id" value="@order.Id" />
-                                <button type="submit" class="btn staff-action-button">
-                                    @order.Status.NextActionLabel() →
+                            <form asp-controller="Staff"
+                                  asp-action="Advance"
+                                  method="post">
+
+                                <input type="hidden"
+                                       name="id"
+                                       value="@order.Id" />
+
+                                <button type="submit"
+                                        class="btn staff-action-button">
+                                    @order.Status.NextActionLabel()
+                                    →
                                 </button>
                             </form>
                         }
                         else
                         {
-                            <span class="staff-completed">完了</span>
+                            <span class="staff-completed">
+                                完了
+                            </span>
                         }
                     </div>
 
                 </article>
             }
+
         </div>
     }
-
 </div>
