@@ -1,5 +1,4 @@
-﻿using global::SelfOrderSystem.Models;
-using SelfOrderSystem.Models;               // カートの商品情報の型を使う 
+﻿using SelfOrderSystem.Models;               // カートの商品情報の型を使う 
 
 namespace SelfOrderSystem.Services;
 

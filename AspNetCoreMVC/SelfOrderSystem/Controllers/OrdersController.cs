@@ -48,7 +48,7 @@ public class OrdersController : Controller
 		var result = await _orderService.PlaceAsync(cartItems, model.TableNumber);
 
 		// 保存に失敗した場合はエラーを表示して再度Checkout画面に戻す
-		if (result.IsSuccess)
+		if (!result.IsSuccess)
 		{
 			foreach (var error in result.Errors)
 			{
