@@ -4,9 +4,12 @@ using SelfOrderSystem.Data;          // AppDbContextを使用
 using SelfOrderSystem.Models;        // Order, OrderStatusを使用
 using Microsoft.AspNetCore.SignalR;
 using SelfOrderSystem.Hubs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SelfOrderSystem.Controllers;
 
+// 既存のStaffController クラス宣言の直前に付ける 
+[Authorize(Roles = "Staff")]
 public class StaffController : Controller
 {
 	private readonly AppDbContext _db; // DBへの接続を担当 
@@ -73,8 +76,8 @@ public class StaffController : Controller
 				.Group($"order-{order.PublicId:N}")
 				.SendAsync("OrderStatusChanged");
 
-			// 他の店舗画面にも一覧変更を通知 
-			await _hubContext.Clients.All.SendAsync("OrdersChanged");
+			await _hubContext.Clients.Group("staff")
+				.SendAsync("OrdersChanged");
 		}
 		catch (Exception ex)
 		{

@@ -90,8 +90,9 @@ public class OrderService : IOrderService   // IOrderServiceで定義した処�
 
 			try
 			{
-				//店舗画面と注文状況画面の両方へ通知する
-				await _hubContext.Clients.All.SendAsync("OrdersChanged");
+				// スタッフグループだけに通知 
+				await _hubContext.Clients.Group("staff")
+				.SendAsync("OrdersChanged");
 			}
 			catch (Exception ex)
 			{

@@ -86,11 +86,11 @@
 
                         @* 現在の注文状態 *@
                         <span class="staff-status
-                                                            @(order.Status == OrderStatus.Served
-                                                                                                                                                        ? "staff-status-served"
-                                                                                                                                                        : order.Status == OrderStatus.Cooking
-                                                                                                                                                            ? "staff-status-cooking"
-                                                                                                                                                            : "staff-status-new")">
+                                                                                    @(order.Status == OrderStatus.Served
+                                                                                                                                                                                                                                                  ? "staff-status-served"
+                                                                                                                                                                                                                                                  : order.Status == OrderStatus.Cooking
+                                                                                                                                                                                                                                                      ? "staff-status-cooking"
+                                                                                                                                                                                                                                                      : "staff-status-new")">
                     @order.Status.ToJapanese()
                 </span>
             </div>
@@ -158,7 +158,7 @@
 
 @section Scripts {
     @* LibMan で追加したSignalRのJavaScript *@ 
-            <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+                        <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
     <script>
 
         // Hubとの接続を作る
@@ -172,10 +172,16 @@
             window.location.reload();
         });
 
-        // 再接続後も表示内容を更新する
-        staffConnection.onreconnected(() => window.location.reload());
-        staffConnection.start().catch(error => {
-            console.error("店舗 SignalR 接続エラー", error);
+        // 再接続したらグループに再参加
+        staffConnection.onreconnected(async () => {
+            await staffConnection.invoke("JoinStaff");
+            window.location.reload();
         });
+
+        // 接続成功後にスタッフグループへ参加
+        staffConnection.start()
+            .then(() => staffConnection.invoke("JoinStaff"))
+            .catch(error => console.error("店舗 SignalR 接続エラー", error));
+
     </script>
 }
